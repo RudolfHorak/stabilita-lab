@@ -42,7 +42,8 @@ body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #1a1a
 /* Legenda */
 .legend { display: flex; flex-wrap: wrap; gap: 8px; background: white; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #ddd; }
 .leg-title { width: 100%; font-weight: 600; font-size: 11px; color: #555; margin-bottom: 4px; }
-.leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 8px; border-radius: 4px; border: 1px solid #ccc; }
+.leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 8px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; transition: filter .15s; }
+.leg-item:hover { filter: brightness(.93); }
 
 /* Skupiny */
 .grp-section { margin-bottom: 24px; border-radius: 6px; overflow: hidden; border: 2px solid; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
@@ -157,9 +158,9 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 
 <div id="view-stab">
-  <div class="legend"><div class="leg-title">LEGENDA — skupiny dle stability při pokojové teplotě (15–25 °C):</div><span class="leg-item" style="background:#fde8e8;border-color:#c0392b">⚠️ IHNED (10)</span><span class="leg-item" style="background:#fde8e8;border-color:#e74c3c">🔴 Do 2 hodin při pokojové teplotě (26)</span><span class="leg-item" style="background:#fdebd0;border-color:#d35400">🟠 Do 4 hodin při pokojové teplotě (11)</span><span class="leg-item" style="background:#fef5e7;border-color:#e67e22">🔶 Do 6 hodin při pokojové teplotě (53)</span><span class="leg-item" style="background:#fef9e7;border-color:#b7950b">🟡 Do 8 hodin při pokojové teplotě (12)</span><span class="leg-item" style="background:#fdfefe;border-color:#aed6f1">🔵 Do 24 hodin při pokojové teplotě (90)</span><span class="leg-item" style="background:#eafaf1;border-color:#82e0aa">🟢 2–3 dny při pokojové teplotě (21)</span><span class="leg-item" style="background:#e9f7ef;border-color:#27ae60">✅ 4 dny a více při pokojové teplotě (16)</span><span class="leg-item" style="background:#eaf4fb;border-color:#5dade2">❄️ Pouze chlazené (+2 až +8 °C) / zvláštní podmínky (182)</span></div>
+  <div class="legend"><div class="leg-title">LEGENDA — skupiny dle stability při pokojové teplotě (15–25 °C):</div><span class="leg-item" style="background:#fde8e8;border-color:#c0392b" onclick="scrollToGroup('grp-stab-1')" title="Přejít na skupinu">⚠️ IHNED (10)</span><span class="leg-item" style="background:#fde8e8;border-color:#e74c3c" onclick="scrollToGroup('grp-stab-2')" title="Přejít na skupinu">🔴 Do 2 hodin při pokojové teplotě (26)</span><span class="leg-item" style="background:#fdebd0;border-color:#d35400" onclick="scrollToGroup('grp-stab-3')" title="Přejít na skupinu">🟠 Do 4 hodin při pokojové teplotě (11)</span><span class="leg-item" style="background:#fef5e7;border-color:#e67e22" onclick="scrollToGroup('grp-stab-4')" title="Přejít na skupinu">🔶 Do 6 hodin při pokojové teplotě (53)</span><span class="leg-item" style="background:#fef9e7;border-color:#b7950b" onclick="scrollToGroup('grp-stab-5')" title="Přejít na skupinu">🟡 Do 8 hodin při pokojové teplotě (12)</span><span class="leg-item" style="background:#fdfefe;border-color:#aed6f1" onclick="scrollToGroup('grp-stab-6')" title="Přejít na skupinu">🔵 Do 24 hodin při pokojové teplotě (90)</span><span class="leg-item" style="background:#eafaf1;border-color:#82e0aa" onclick="scrollToGroup('grp-stab-7')" title="Přejít na skupinu">🟢 2–3 dny při pokojové teplotě (21)</span><span class="leg-item" style="background:#e9f7ef;border-color:#27ae60" onclick="scrollToGroup('grp-stab-8')" title="Přejít na skupinu">✅ 4 dny a více při pokojové teplotě (16)</span><span class="leg-item" style="background:#eaf4fb;border-color:#5dade2" onclick="scrollToGroup('grp-stab-9')" title="Přejít na skupinu">❄️ Pouze chlazené (+2 až +8 °C) / zvláštní podmínky (182)</span></div>
   
-<div class="grp-section" style="border-color:#c0392b">
+<div id="grp-stab-1" class="grp-section" style="border-color:#c0392b">
   <div class="grp-header" style="background:#c0392b">
     <h2>⚠️ IHNED — zpracovat okamžitě <span class="grp-count">10 vyšetření</span></h2>
     <div class="grp-sub">Labilní analyty — okamžité zpracování nebo zmrazení bezprostředně po odběru</div>
@@ -182,7 +183,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Moče</td><td class="col-zkr">HAV</td><td class="col-naz">UHAMB_Válce</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#e74c3c">
+<div id="grp-stab-2" class="grp-section" style="border-color:#e74c3c">
   <div class="grp-header" style="background:#e74c3c">
     <h2>🔴 Do 2 hodin při pokojové teplotě <span class="grp-count">26 vyšetření</span></h2>
     <div class="grp-sub">Vzorky musí být doručeny do 2 hodin od odběru</div>
@@ -221,7 +222,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Moče</td><td class="col-zkr">UVAXM</td><td class="col-naz">Válce ostatní (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#d35400">
+<div id="grp-stab-3" class="grp-section" style="border-color:#d35400">
   <div class="grp-header" style="background:#d35400">
     <h2>🟠 Do 4 hodin při pokojové teplotě <span class="grp-count">11 vyšetření</span></h2>
     <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 4 hodin</div>
@@ -245,7 +246,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Hematologie</td><td class="col-zkr">FW-2[2]</td><td class="col-naz">FW 2 hod</td><td class="col-kat">Sedimentace erytr.</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#e67e22">
+<div id="grp-stab-4" class="grp-section" style="border-color:#e67e22">
   <div class="grp-header" style="background:#e67e22">
     <h2>🔶 Do 6 hodin při pokojové teplotě <span class="grp-count">53 vyšetření</span></h2>
     <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 6 hodin</div>
@@ -311,7 +312,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Hematologie</td><td class="col-zkr">TQ-PTR</td><td class="col-naz">PT-ratio, protrombin.poměr</td><td class="col-kat">Koagulace</td><td class="col-rt">6 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#b7950b">
+<div id="grp-stab-5" class="grp-section" style="border-color:#b7950b">
   <div class="grp-header" style="background:#b7950b">
     <h2>🟡 Do 8 hodin při pokojové teplotě <span class="grp-count">12 vyšetření</span></h2>
     <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 8 hodin</div>
@@ -336,7 +337,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Biochemie</td><td class="col-zkr">EST3</td><td class="col-naz">Estriol nekonjugovaný</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">8 hod</td><td class="col-cold">14 dní</td><td class="col-freeze">—</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#aed6f1">
+<div id="grp-stab-6" class="grp-section" style="border-color:#aed6f1">
   <div class="grp-header" style="background:#2980b9">
     <h2>🔵 Do 24 hodin při pokojové teplotě <span class="grp-count">90 vyšetření</span></h2>
     <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 24 hodin</div>
@@ -439,7 +440,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Sérologie</td><td class="col-zkr">VZVM</td><td class="col-naz">VZV IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#82e0aa">
+<div id="grp-stab-7" class="grp-section" style="border-color:#82e0aa">
   <div class="grp-header" style="background:#1e8449">
     <h2>🟢 2–3 dny při pokojové teplotě <span class="grp-count">21 vyšetření</span></h2>
     <div class="grp-sub">Vzorky stabilní při pokojové teplotě 2–3 dny</div>
@@ -473,7 +474,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Moče</td><td class="col-zkr">UUREA</td><td class="col-naz">U_UREA</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">2 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#27ae60">
+<div id="grp-stab-8" class="grp-section" style="border-color:#27ae60">
   <div class="grp-header" style="background:#1a5e36">
     <h2>✅ 4 dny a více při pokojové teplotě <span class="grp-count">16 vyšetření</span></h2>
     <div class="grp-sub">Vzorky stabilní při pokojové teplotě 4 dny a déle</div>
@@ -502,7 +503,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Moče</td><td class="col-zkr">UNA</td><td class="col-naz">U_Sodík (Na)</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">2 týdny</td><td class="col-cold">8 týdnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#5dade2">
+<div id="grp-stab-9" class="grp-section" style="border-color:#5dade2">
   <div class="grp-header" style="background:#1a5276">
     <h2>❄️ Pouze chlazené (+2 až +8 °C) / zvláštní podmínky <span class="grp-count">182 vyšetření</span></h2>
     <div class="grp-sub">Bez definované RT stability — uchovávat výhradně v chladu nebo dle speciálních pokynů</div>
@@ -700,9 +701,9 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 
 <div id="view-mat" style="display:none">
-  <div class="legend"><div class="leg-title">LEGENDA — skupiny dle typu odběrového materiálu (kombinovaný odběr → více skupin):</div><span class="leg-item" style="background:#fffde7;border-color:#f9a825">🟡 SST / Gelová zkumavka (182)</span><span class="leg-item" style="background:#f3e5f5;border-color:#8e24aa">🟣 EDTA zkumavka (60)</span><span class="leg-item" style="background:#e3f2fd;border-color:#1e88e5">🔵 Citračná zkumavka (17)</span><span class="leg-item" style="background:#e8f5e9;border-color:#43a047">🟢 Heparinová zkumavka (19)</span><span class="leg-item" style="background:#fafafa;border-color:#78909c">⬜ Fluoridová zkumavka (5)</span><span class="leg-item" style="background:#fff8e1;border-color:#ffb300">🟠 Moč (105)</span><span class="leg-item" style="background:#fce4ec;border-color:#e53935">🔴 Mikrobiologická výtěrovka / tampón (42)</span><span class="leg-item" style="background:#ede7f6;border-color:#5e35b1">🧬 PCR výtěrovka / odběrová sada (10)</span><span class="leg-item" style="background:#e0f7fa;border-color:#00acc1">🧪 Sterilní zkumavka / kontejner (20)</span><span class="leg-item" style="background:#eceff1;border-color:#546e7a">📋 Jiný / kombinovaný odběr (24)</span></div>
+  <div class="legend"><div class="leg-title">LEGENDA — skupiny dle typu odběrového materiálu (kombinovaný odběr → více skupin):</div><span class="leg-item" style="background:#fffde7;border-color:#f9a825" onclick="scrollToGroup('grp-mat-1')" title="Přejít na skupinu">🟡 SST / Gelová zkumavka (182)</span><span class="leg-item" style="background:#f3e5f5;border-color:#8e24aa" onclick="scrollToGroup('grp-mat-2')" title="Přejít na skupinu">🟣 EDTA zkumavka (60)</span><span class="leg-item" style="background:#e3f2fd;border-color:#1e88e5" onclick="scrollToGroup('grp-mat-3')" title="Přejít na skupinu">🔵 Citračná zkumavka (17)</span><span class="leg-item" style="background:#e8f5e9;border-color:#43a047" onclick="scrollToGroup('grp-mat-4')" title="Přejít na skupinu">🟢 Heparinová zkumavka (19)</span><span class="leg-item" style="background:#fafafa;border-color:#78909c" onclick="scrollToGroup('grp-mat-5')" title="Přejít na skupinu">⬜ Fluoridová zkumavka (5)</span><span class="leg-item" style="background:#fff8e1;border-color:#ffb300" onclick="scrollToGroup('grp-mat-6')" title="Přejít na skupinu">🟠 Moč (105)</span><span class="leg-item" style="background:#fce4ec;border-color:#e53935" onclick="scrollToGroup('grp-mat-7')" title="Přejít na skupinu">🔴 Mikrobiologická výtěrovka / tampón (42)</span><span class="leg-item" style="background:#ede7f6;border-color:#5e35b1" onclick="scrollToGroup('grp-mat-8')" title="Přejít na skupinu">🧬 PCR výtěrovka / odběrová sada (10)</span><span class="leg-item" style="background:#e0f7fa;border-color:#00acc1" onclick="scrollToGroup('grp-mat-9')" title="Přejít na skupinu">🧪 Sterilní zkumavka / kontejner (20)</span><span class="leg-item" style="background:#eceff1;border-color:#546e7a" onclick="scrollToGroup('grp-mat-10')" title="Přejít na skupinu">📋 Jiný / kombinovaný odběr (24)</span></div>
   
-<div class="grp-section" style="border-color:#f9a825">
+<div id="grp-mat-1" class="grp-section" style="border-color:#f9a825">
   <div class="grp-header" style="background:#e65100">
     <h2>🟡 SST / Gelová zkumavka — sérum <span class="grp-count">182 vyšetření</span></h2>
     <div class="grp-sub">Srážlivá krev s gelem a aktivátorem srážení — zlatý nebo oranžový uzávěr</div>
@@ -896,7 +897,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Sérologie</td><td class="col-zkr">HB.S</td><td class="col-naz">HBsAg</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-detail">Zkumavka - srážlivá krev - gel, aktivátor srážení</td><td class="col-rt">—</td><td class="col-note">HBV, hepatitis B virus, způsobuje virový zánět jater (hepatitidu) typu B. Jedná se o DNA virus z rodu Orthohepadnavirus (čeleď Hepadnavirida…</td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#8e24aa">
+<div id="grp-mat-2" class="grp-section" style="border-color:#8e24aa">
   <div class="grp-header" style="background:#6a1b9a">
     <h2>🟣 EDTA zkumavka — plná krev <span class="grp-count">60 vyšetření</span></h2>
     <div class="grp-sub">Nesrážlivá krev s K2EDTA / Na2EDTA — fialový uzávěr. Hematologie, DNA.</div>
@@ -968,7 +969,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Hematologie</td><td class="col-zkr">SCRERYP</td><td class="col-naz">Screening anti-ery protilátek</td><td class="col-kat">Imunohematologie</td><td class="col-detail">Zkumavka - nesrážlivá krev - nesrážlivá krev - K2EDTA</td><td class="col-rt">—</td><td class="col-note">Screening protilátek je součástí předtransfuzního vyšetření. Provádí se rovněž u gravidních žen pro zjištění případné inkompatibility mezi m…</td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#1e88e5">
+<div id="grp-mat-3" class="grp-section" style="border-color:#1e88e5">
   <div class="grp-header" style="background:#1565c0">
     <h2>🔵 Citračná zkumavka — koagulace <span class="grp-count">17 vyšetření</span></h2>
     <div class="grp-sub">Nesrážlivá krev s citrátem sodným 1:9 — modrý uzávěr</div>
@@ -997,7 +998,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Hematologie</td><td class="col-zkr">FW-2[2]</td><td class="col-naz">FW 2 hod</td><td class="col-kat">Sedimentace erytr.</td><td class="col-detail">Zkumavka - nesrážlivá krev - citrát sodný FW</td><td class="col-rt">4 hod</td><td class="col-note">Měří se rychlost samovolné sedimentace erytrocytů za časovou jednotku (2 hodiny) při standardních podmínkách. Rychlost závisí na tendenci er…</td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#43a047">
+<div id="grp-mat-4" class="grp-section" style="border-color:#43a047">
   <div class="grp-header" style="background:#2e7d32">
     <h2>🟢 Heparinová zkumavka — plazma <span class="grp-count">19 vyšetření</span></h2>
     <div class="grp-sub">Nesrážlivá krev s lithium-heparinem — zelený uzávěr</div>
@@ -1028,7 +1029,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Biochemie</td><td class="col-zkr">UREA</td><td class="col-naz">Urea</td><td class="col-kat">Substráty</td><td class="col-detail">Zkumavka - srážlivá krev - gel, aktivátor srážení, Zkumavka - srážlivá krev - ativátor srážení, Zkumavka - nesrážlivá kr…</td><td class="col-rt">1 týden</td><td class="col-note">Urea je konečným produktem metabolismu bílkovin a aminokyselin. Je syntetizována v cyklu močoviny v játrech z amoniaku, který vzniká při dea…</td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#78909c">
+<div id="grp-mat-5" class="grp-section" style="border-color:#78909c">
   <div class="grp-header" style="background:#546e7a">
     <h2>⬜ Fluoridová zkumavka — glykémie / laktát <span class="grp-count">5 vyšetření</span></h2>
     <div class="grp-sub">Nesrážlivá krev s fluoridem nebo oxalátem — šedý uzávěr</div>
@@ -1045,7 +1046,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">Biochemie</td><td class="col-zkr">GL0T</td><td class="col-naz">oGTT - těhotné</td><td class="col-kat">Monitorování DM</td><td class="col-detail">Zkumavka - nesrážlivá krev - fluorid/EDTA/citrát</td><td class="col-rt">1 den</td><td class="col-note">Gestační DM je nově definován jako diabetes zachycený ve II. až III. trimestru těhotenství u žen, u kterých nebyl přítomen zjevný diabetes p…</td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#ffb300">
+<div id="grp-mat-6" class="grp-section" style="border-color:#ffb300">
   <div class="grp-header" style="background:#e65100">
     <h2>🟠 Moč — zkumavka / sterilní nádobka <span class="grp-count">105 vyšetření</span></h2>
     <div class="grp-sub">Jednorázový vzorek nebo sběr moče, URICULT — sterilní nebo nesterilní nádobka</div>
@@ -1162,7 +1163,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">PCR</td><td class="col-zkr">URICULT</td><td class="col-naz">Odběr moče do soupravy URICULT</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-detail">URICULT</td><td class="col-rt">—</td><td class="col-note">Před odběrem je třeba provést důkladné omytí zevního genitálu. Do sterilní odběrové nádobky soupravy URICULT zachytíme střední proud ranní m…</td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#e53935">
+<div id="grp-mat-7" class="grp-section" style="border-color:#e53935">
   <div class="grp-header" style="background:#b71c1c">
     <h2>🔴 Mikrobiologická výtěrovka / tampón <span class="grp-count">42 vyšetření</span></h2>
     <div class="grp-sub">Sterilní výtěrovka (plastová nebo drátěná) s médiem Amies nebo bez média</div>
@@ -1216,7 +1217,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">PCR</td><td class="col-zkr">VYTREKT</td><td class="col-naz">Výtěr z rekta</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-detail">Sterilní výtěrovka plastová s transportní půdou.</td><td class="col-rt">1 den</td><td class="col-note">U pacienta zavedeme sterilní výtěrovku šroubovitým pohybem do konečníku tak, aby došlo ke znečištění výtěrovky stolicí. Výtěrovku z konečník…</td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#5e35b1">
+<div id="grp-mat-8" class="grp-section" style="border-color:#5e35b1">
   <div class="grp-header" style="background:#4527a0">
     <h2>🧬 PCR výtěrovka / odběrová sada <span class="grp-count">10 vyšetření</span></h2>
     <div class="grp-sub">Výtěrovka nebo zkumavka s PCR transportním médiem (MWE, Bi-Cov)</div>
@@ -1238,7 +1239,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">PCR</td><td class="col-zkr">UUUP</td><td class="col-naz">Ureaplasma urealyticum/ Ureaplasma parvum</td><td class="col-kat">Sexuálně přenosné infekce</td><td class="col-detail">Sterilní plastová zkumavka (moč), výtěrovka s PCR transportním médiem MWE.</td><td class="col-rt">—</td><td class="col-note"></td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#00acc1">
+<div id="grp-mat-9" class="grp-section" style="border-color:#00acc1">
   <div class="grp-header" style="background:#006064">
     <h2>🧪 Sterilní zkumavka / kontejner — kultivace <span class="grp-count">20 vyšetření</span></h2>
     <div class="grp-sub">Sterilní plastová zkumavka nebo sputovka — kultivace, likvor, sputum</div>
@@ -1270,7 +1271,7 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 <tr><td class="col-odd">PCR</td><td class="col-zkr">STOLADENOROTANORO</td><td class="col-naz">Odběr stolice pro průkaz antigenů Adenovirů, Rotavirů a Norovirů</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-detail">Sterilní zkumavka s lopatičkou.</td><td class="col-rt">—</td><td class="col-note">Stolici nabereme pomocí lopatičky, která je připevněna zespodu k víčku odběrové soupravy, stolici na lopatičce vložíme do nádobky nádobku uz…</td></tr></tbody>
   </table>
 </div>
-<div class="grp-section" style="border-color:#546e7a">
+<div id="grp-mat-10" class="grp-section" style="border-color:#546e7a">
   <div class="grp-header" style="background:#37474f">
     <h2>📋 Jiný / kombinovaný odběr <span class="grp-count">24 vyšetření</span></h2>
     <div class="grp-sub">Stolice, podložní sklíčko, ostatní nebo kombinace výše neuvedených materiálů</div>
@@ -1493,6 +1494,11 @@ function showDetail(idx) {
 function backToResults() {
   viewDetail.style.display = 'none';
   viewSearch.style.display = 'block';
+}
+
+function scrollToGroup(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
 function escHtml(s) {

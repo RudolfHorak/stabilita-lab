@@ -207,7 +207,8 @@ def build_stab_sections(grouped: dict) -> tuple[str, str]:
     for g in GROUPS_STAB:
         n = len(grouped.get(g["id"], []))
         legend += (
-            f'<span class="leg-item" style="background:{g["color_bg"]};border-color:{g["color_border"]}">'
+            f'<span class="leg-item" style="background:{g["color_bg"]};border-color:{g["color_border"]}"'
+            f' onclick="scrollToGroup(\'grp-stab-{g["id"]}\')" title="Přejít na skupinu">'
             f'{g["icon"]} {g["label"].split("—")[0].strip()} ({n})</span>'
         )
     sections = ""
@@ -216,7 +217,7 @@ def build_stab_sections(grouped: dict) -> tuple[str, str]:
         if not tests: continue
         rows_html = html_table_stab(tests, g["id"])
         sections += f"""
-<div class="grp-section" style="border-color:{g['color_border']}">
+<div id="grp-stab-{g['id']}" class="grp-section" style="border-color:{g['color_border']}">
   <div class="grp-header" style="background:{g['color_header']}">
     <h2>{g['icon']} {g['label']} <span class="grp-count">{len(tests)} vyšetření</span></h2>
     <div class="grp-sub">{g['subtitle']}</div>
@@ -328,7 +329,8 @@ def build_mat_sections(grouped: dict) -> tuple[str, str]:
     for g in GROUPS_MAT:
         n = len(grouped.get(g["id"], []))
         legend += (
-            f'<span class="leg-item" style="background:{g["color_bg"]};border-color:{g["color_border"]}">'
+            f'<span class="leg-item" style="background:{g["color_bg"]};border-color:{g["color_border"]}"'
+            f' onclick="scrollToGroup(\'grp-mat-{g["id"]}\')" title="Přejít na skupinu">'
             f'{g["icon"]} {g["label"].split("—")[0].strip()} ({n})</span>'
         )
     sections = ""
@@ -337,7 +339,7 @@ def build_mat_sections(grouped: dict) -> tuple[str, str]:
         if not tests: continue
         rows_html = html_table_mat(tests)
         sections += f"""
-<div class="grp-section" style="border-color:{g['color_border']}">
+<div id="grp-mat-{g['id']}" class="grp-section" style="border-color:{g['color_border']}">
   <div class="grp-header" style="background:{g['color_header']}">
     <h2>{g['icon']} {g['label']} <span class="grp-count">{len(tests)} vyšetření</span></h2>
     <div class="grp-sub">{g['subtitle']}</div>
@@ -432,7 +434,8 @@ body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #1a1a
 /* Legenda */
 .legend { display: flex; flex-wrap: wrap; gap: 8px; background: white; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #ddd; }
 .leg-title { width: 100%; font-weight: 600; font-size: 11px; color: #555; margin-bottom: 4px; }
-.leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 8px; border-radius: 4px; border: 1px solid #ccc; }
+.leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 8px; border-radius: 4px; border: 1px solid #ccc; cursor: pointer; transition: filter .15s; }
+.leg-item:hover { filter: brightness(.93); }
 
 /* Skupiny */
 .grp-section { margin-bottom: 24px; border-radius: 6px; overflow: hidden; border: 2px solid; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
@@ -701,6 +704,11 @@ function showDetail(idx) {
 function backToResults() {
   viewDetail.style.display = 'none';
   viewSearch.style.display = 'block';
+}
+
+function scrollToGroup(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({behavior: 'smooth', block: 'start'});
 }
 
 function escHtml(s) {
