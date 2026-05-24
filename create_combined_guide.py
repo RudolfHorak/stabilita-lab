@@ -1,9 +1,11 @@
 """
-Kombinovaný přehled laboratorních vyšetření — jedna HTML stránka, dva pohledy:
+Kombinovaný přehled laboratorních vyšetření — jedna HTML stránka, tři pohledy:
   • Stabilita vzorků   (9 skupin dle RT doby)
   • Odběrový materiál  (10 skupin dle zkumavky / výtěrovky)
+  • Vyhledávání        (live search dle zkratky nebo názvu → detail vyšetření)
 """
 
+import json
 import re
 import sqlite3
 from datetime import date
@@ -28,9 +30,9 @@ _VALUE = re.compile(
     r"měsíc[ůůe]?|měsíce?|rok[ůu]?)",
     re.IGNORECASE,
 )
-_COLD_TEMP  = re.compile(r"(?:2\s*[-–]\s*8|\+?4\s*(?:[-–—]|až)\s*\+?8)", re.IGNORECASE)
+_COLD_TEMP   = re.compile(r"(?:2\s*[-–]\s*8|\+?4\s*(?:[-–—]|až)\s*\+?8)", re.IGNORECASE)
 _FREEZE_TEMP = re.compile(r"-20\s*°?\s*C", re.IGNORECASE)
-URGENT_RE   = re.compile(r"ihned|okamžit|bezprostředn|labilní|zamrazit.*odběr", re.IGNORECASE)
+URGENT_RE    = re.compile(r"ihned|okamžit|bezprostředn|labilní|zamrazit.*odběr", re.IGNORECASE)
 PREANALYTIC_RE = re.compile(
     r"světl|led|centrifug|zamraz|nemraz|chlazen|fluorid|heparin\s*zkumavk|citráto|EDTA\s*plazm|transport|oddělit\s*plazm",
     re.IGNORECASE,
@@ -44,12 +46,12 @@ def _split(s: str) -> list[str]:
 def _parse_unit_to_hours(value_str: str, unit_str: str) -> float:
     v = float(value_str.replace(",", "."))
     u = unit_str.lower()
-    if "min" in u:      return v / 60
+    if "min" in u:                      return v / 60
     if "hod" in u or u.startswith("ho"): return v
-    if "týden" in u or "týdn" in u: return v * 24 * 7
-    if "měsíc" in u:    return v * 24 * 30
-    if "rok" in u:      return v * 24 * 365
-    return v * 24  # dny
+    if "týden" in u or "týdn" in u:     return v * 24 * 7
+    if "měsíc" in u:                    return v * 24 * 30
+    if "rok" in u:                      return v * 24 * 365
+    return v * 24
 
 
 def _extract_from_segment(text: str, temp_re) -> str | None:
@@ -73,9 +75,9 @@ def extract_rt_hours(stabilita: str) -> float | None:
 
 
 def extract_rt_str(stabilita: str, rt_h: float | None) -> str:
-    if rt_h is None:   return "—"
-    if rt_h == -1:     return "Ihned"
-    if rt_h < 1:       return f"{int(rt_h * 60)} min"
+    if rt_h is None:  return "—"
+    if rt_h == -1:    return "Ihned"
+    if rt_h < 1:      return f"{int(rt_h * 60)} min"
     if rt_h < 24:
         h = int(rt_h)
         return f"{h} {'hodina' if h == 1 else 'hod'}"
@@ -169,14 +171,9 @@ GROUPS_STAB = [
 
 COL_WIDTHS_STAB = (
     "<colgroup>"
-    '<col style="width:8%">'
-    '<col style="width:7%">'
-    '<col style="width:22%">'
-    '<col style="width:11%">'
-    '<col style="width:8%">'
-    '<col style="width:9%">'
-    '<col style="width:9%">'
-    '<col style="width:26%">'
+    '<col style="width:8%"><col style="width:7%"><col style="width:22%">'
+    '<col style="width:11%"><col style="width:8%"><col style="width:9%">'
+    '<col style="width:9%"><col style="width:26%">'
     "</colgroup>"
 )
 
@@ -206,7 +203,6 @@ def html_table_stab(tests: list[dict], group_id: int) -> str:
 
 
 def build_stab_sections(grouped: dict) -> tuple[str, str]:
-    """Vrátí (legenda_html, sekce_html)."""
     legend = ""
     for g in GROUPS_STAB:
         n = len(grouped.get(g["id"], []))
@@ -214,7 +210,6 @@ def build_stab_sections(grouped: dict) -> tuple[str, str]:
             f'<span class="leg-item" style="background:{g["color_bg"]};border-color:{g["color_border"]}">'
             f'{g["icon"]} {g["label"].split("—")[0].strip()} ({n})</span>'
         )
-
     sections = ""
     for g in GROUPS_STAB:
         tests = grouped.get(g["id"], [])
@@ -299,14 +294,13 @@ GROUPS_MAT = [
      "color_bg": "#eceff1", "color_border": "#546e7a", "color_header": "#37474f", "icon": "📋"},
 ]
 
+_MAT_BY_ID = {g["id"]: g for g in GROUPS_MAT}
+_STAB_BY_ID = {g["id"]: g for g in GROUPS_STAB}
+
 COL_WIDTHS_MAT = (
     "<colgroup>"
-    '<col style="width:7%">'
-    '<col style="width:7%">'
-    '<col style="width:22%">'
-    '<col style="width:11%">'
-    '<col style="width:26%">'
-    '<col style="width:8%">'
+    '<col style="width:7%"><col style="width:7%"><col style="width:22%">'
+    '<col style="width:11%"><col style="width:26%"><col style="width:8%">'
     '<col style="width:19%">'
     "</colgroup>"
 )
@@ -337,7 +331,6 @@ def build_mat_sections(grouped: dict) -> tuple[str, str]:
             f'<span class="leg-item" style="background:{g["color_bg"]};border-color:{g["color_border"]}">'
             f'{g["icon"]} {g["label"].split("—")[0].strip()} ({n})</span>'
         )
-
     sections = ""
     for g in GROUPS_MAT:
         tests = grouped.get(g["id"], [])
@@ -361,16 +354,72 @@ def build_mat_sections(grouped: dict) -> tuple[str, str]:
 
 
 # ===========================================================================
-# CSS + HTML ŠABLONA
+# SEARCH DATA — serializace pro JS
+# ===========================================================================
+
+def build_search_data(rows_with_meta: list[dict]) -> str:
+    """Vytvoří JSON array s předpočítanými hodnotami pro každý test."""
+    data = []
+    for r in rows_with_meta:
+        stab = r["stabilita"] or ""
+        rt_h = r["rt_hours"]
+        stab_g = _STAB_BY_ID[assign_stab_group(rt_h)]
+        mat_gids = assign_mat_groups(r["typ_materialu"])
+        data.append({
+            "zkratka":   r["zkratka"] or "",
+            "nazev":     r["nazev"] or "",
+            "oddeleni":  r["oddeleni"] or "",
+            "kategorie": r["kategorie"] or "",
+            "typ_materialu":      r["typ_materialu"] or "",
+            "klinicke_informace": r["klinicke_informace"] or "",
+            "rt":     extract_rt_str(stab, rt_h),
+            "cold":   extract_cold_str(stab),
+            "freeze": extract_freeze_str(stab),
+            "stab_id":    stab_g["id"],
+            "stab_label": stab_g["label"],
+            "stab_icon":  stab_g["icon"],
+            "stab_color": stab_g["color_header"],
+            "mat_groups": [
+                {"id": gid, "label": _MAT_BY_ID[gid]["label"],
+                 "icon": _MAT_BY_ID[gid]["icon"],
+                 "color": _MAT_BY_ID[gid]["color_header"]}
+                for gid in mat_gids
+            ],
+        })
+    js = json.dumps(data, ensure_ascii=False, separators=(",", ":"))
+    return js.replace("</script>", r"<\/script>")
+
+
+# ===========================================================================
+# CSS
 # ===========================================================================
 
 CSS = """
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #1a1a1a; background: #f5f6fa; padding: 20px; }
+
+/* Hlavička */
 .page-header { background: #1a3a5c; color: white; padding: 18px 24px; border-radius: 6px; margin-bottom: 16px; }
 .page-header h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
-.page-header .subtitle { font-size: 12px; opacity: 0.85; }
-.page-header .meta { font-size: 11px; opacity: 0.7; margin-top: 6px; }
+.page-header .subtitle { font-size: 12px; opacity: .85; }
+.page-header .meta { font-size: 11px; opacity: .7; margin-top: 6px; }
+
+/* Vyhledávání */
+.search-wrap { position: relative; margin-bottom: 12px; }
+.search-input {
+    width: 100%; padding: 11px 44px 11px 16px;
+    font-size: 14px; border: 2px solid #aed6f1;
+    border-radius: 8px; outline: none; transition: border-color .15s;
+}
+.search-input:focus { border-color: #1a3a5c; }
+.search-clear {
+    position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+    background: none; border: none; font-size: 18px; color: #999;
+    cursor: pointer; display: none; line-height: 1;
+}
+.search-clear.visible { display: block; }
+
+/* Záložky */
 .tab-bar { display: flex; gap: 4px; margin-bottom: 16px; }
 .tab-btn {
     padding: 9px 24px; border: 2px solid #1a3a5c; border-radius: 6px;
@@ -379,18 +428,20 @@ body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #1a1a
 }
 .tab-btn.active { background: #1a3a5c; color: white; }
 .tab-btn:hover:not(.active) { background: #eaf0f8; }
-.legend {
-    display: flex; flex-wrap: wrap; gap: 8px;
-    background: white; padding: 12px 16px; border-radius: 6px;
-    margin-bottom: 20px; border: 1px solid #ddd;
-}
+
+/* Legenda */
+.legend { display: flex; flex-wrap: wrap; gap: 8px; background: white; padding: 12px 16px; border-radius: 6px; margin-bottom: 20px; border: 1px solid #ddd; }
 .leg-title { width: 100%; font-weight: 600; font-size: 11px; color: #555; margin-bottom: 4px; }
 .leg-item { display: flex; align-items: center; gap: 5px; font-size: 11px; padding: 3px 8px; border-radius: 4px; border: 1px solid #ccc; }
+
+/* Skupiny */
 .grp-section { margin-bottom: 24px; border-radius: 6px; overflow: hidden; border: 2px solid; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
 .grp-header { padding: 10px 16px; color: white; }
 .grp-header h2 { font-size: 14px; font-weight: 700; }
 .grp-header .grp-sub { font-size: 11px; opacity: .9; margin-top: 2px; }
 .grp-count { float: right; font-size: 11px; opacity: .85; font-weight: 400; }
+
+/* Tabulky */
 table { width: 100%; table-layout: fixed; border-collapse: collapse; background: white; }
 thead tr { background: #f0f0f0; }
 th { padding: 6px 10px; text-align: left; font-size: 11px; font-weight: 600; color: #444; border-bottom: 1px solid #ddd; white-space: nowrap; }
@@ -404,15 +455,69 @@ tr:hover td { background: rgba(0,0,0,.02); }
 .col-naz { font-weight: 500; }
 .col-kat { color: #666; font-size: 10px; }
 .col-rt  { font-weight: 700; }
-.col-cold  { color: #1a5276; }
+.col-cold   { color: #1a5276; }
 .col-freeze { color: #4a235a; }
 .col-note { color: #7f4f00; font-size: 10px; font-style: italic; }
 .badge-urgent { background: #c0392b; color: white; padding: 1px 5px; border-radius: 3px; font-size: 10px; }
+
+/* === VÝSLEDKY HLEDÁNÍ === */
+#view-search { display: none; }
+.search-meta { font-size: 12px; color: #555; margin-bottom: 12px; padding: 8px 12px; background: white; border-radius: 6px; border: 1px solid #ddd; }
+.search-meta strong { color: #1a3a5c; }
+.no-results { padding: 32px; text-align: center; color: #888; font-size: 14px; background: white; border-radius: 6px; border: 1px dashed #ccc; }
+
+/* Tabulka výsledků */
+.results-table { border-radius: 6px; overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
+.result-row { cursor: pointer; }
+.result-row:hover td { background: #eaf4fb !important; }
+.result-row td { border-bottom: 1px solid #eee; }
+.result-badge {
+    display: inline-block; font-size: 10px; padding: 2px 7px;
+    border-radius: 3px; color: white; margin: 1px 2px;
+}
+
+/* === DETAIL VYŠETŘENÍ === */
+#view-detail { display: none; }
+.back-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    padding: 7px 16px; border: 2px solid #1a3a5c; border-radius: 6px;
+    background: white; color: #1a3a5c; font-size: 13px; font-weight: 600;
+    cursor: pointer; margin-bottom: 16px; transition: background .15s;
+}
+.back-btn:hover { background: #eaf0f8; }
+.detail-card { background: white; border-radius: 8px; overflow: hidden; box-shadow: 0 2px 8px rgba(0,0,0,.12); }
+.detail-head { background: #1a3a5c; color: white; padding: 20px 24px; }
+.detail-zkratka { font-size: 28px; font-weight: 900; letter-spacing: 1px; display: block; }
+.detail-nazev { font-size: 16px; font-weight: 600; margin: 4px 0; opacity: .95; }
+.detail-meta-line { font-size: 12px; opacity: .75; margin-top: 4px; }
+.detail-body { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.detail-col { padding: 20px 24px; }
+.detail-col:first-child { border-right: 1px solid #eee; }
+.detail-col h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 12px; }
+.mat-badge-block { margin-bottom: 8px; }
+.mat-badge {
+    display: inline-block; padding: 4px 10px; border-radius: 4px;
+    color: white; font-size: 12px; font-weight: 600; margin: 2px 2px 2px 0;
+}
+.detail-typ-text { font-size: 11px; color: #555; margin-top: 8px; line-height: 1.5; }
+.stab-grid { display: grid; grid-template-columns: auto 1fr; gap: 6px 12px; align-items: baseline; }
+.stab-lbl { font-size: 11px; color: #888; white-space: nowrap; }
+.stab-val { font-size: 14px; font-weight: 700; color: #1a3a5c; }
+.stab-group-pill {
+    display: inline-block; margin-top: 12px; padding: 5px 12px;
+    border-radius: 20px; color: white; font-size: 11px; font-weight: 600;
+}
+.detail-pokyny { padding: 16px 24px; border-top: 1px solid #eee; }
+.detail-pokyny h3 { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .5px; color: #888; margin-bottom: 8px; }
+.detail-pokyny p { font-size: 12px; color: #444; line-height: 1.6; }
+@media (max-width: 700px) { .detail-body { grid-template-columns: 1fr; } .detail-col:first-child { border-right: none; border-bottom: 1px solid #eee; } }
+
 footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px solid #ddd; border-radius: 6px; font-size: 11px; color: #666; }
 @media print {
     body { background: white; padding: 8px; }
-    .tab-bar { display: none; }
+    .search-wrap, .tab-bar { display: none; }
     #view-stab, #view-mat { display: block !important; }
+    #view-search, #view-detail { display: none !important; }
     #view-stab::before { content: "STABILITA VZORKŮ"; display: block; font-size: 16px; font-weight: 700; margin: 16px 0 8px; }
     #view-mat::before  { content: "ODBĚROVÝ MATERIÁL"; display: block; font-size: 16px; font-weight: 700; margin: 16px 0 8px; page-break-before: always; }
     .page-header, .grp-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -422,16 +527,203 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 }
 """
 
+# ===========================================================================
+# JAVASCRIPT
+# ===========================================================================
+
+JS = """
+const DATA = __SEARCH_DATA__;
+
+const searchInput = document.getElementById('search-input');
+const searchClear = document.getElementById('search-clear');
+const viewStab   = document.getElementById('view-stab');
+const viewMat    = document.getElementById('view-mat');
+const viewSearch = document.getElementById('view-search');
+const viewDetail = document.getElementById('view-detail');
+
+let activeTab = 'stab';
+let currentResults = [];
+let searchTimer = null;
+
+// --- Přepínání záložek ---
+function showTab(name, btn) {
+  activeTab = name;
+  viewStab.style.display   = name === 'stab' ? 'block' : 'none';
+  viewMat.style.display    = name === 'mat'  ? 'block' : 'none';
+  viewSearch.style.display = 'none';
+  viewDetail.style.display = 'none';
+  document.getElementById('btn-stab').classList.toggle('active', name === 'stab');
+  document.getElementById('btn-mat').classList.toggle('active',  name === 'mat');
+}
+
+// --- Vyhledávání ---
+searchInput.addEventListener('input', function () {
+  const q = this.value.trim();
+  searchClear.classList.toggle('visible', q.length > 0);
+  clearTimeout(searchTimer);
+  if (q.length < 2) {
+    if (q.length === 0) showTab(activeTab);
+    return;
+  }
+  searchTimer = setTimeout(() => doSearch(q), 180);
+});
+
+searchInput.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape') clearSearch();
+});
+
+searchClear.addEventListener('click', clearSearch);
+
+function clearSearch() {
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  showTab(activeTab);
+  searchInput.focus();
+}
+
+function doSearch(q) {
+  const ql = q.toLowerCase();
+  currentResults = DATA.filter(t =>
+    t.zkratka.toLowerCase().includes(ql) ||
+    t.nazev.toLowerCase().includes(ql)
+  );
+
+  // Seřadit: zkratka exact match první, pak začíná, pak obsahuje
+  currentResults.sort((a, b) => {
+    const az = a.zkratka.toLowerCase(), bz = b.zkratka.toLowerCase();
+    const an = a.nazev.toLowerCase(),   bn = b.nazev.toLowerCase();
+    const aExact = az === ql || an === ql ? 0 : (az.startsWith(ql) || an.startsWith(ql) ? 1 : 2);
+    const bExact = bz === ql || bn === ql ? 0 : (bz.startsWith(ql) || bn.startsWith(ql) ? 1 : 2);
+    return aExact - bExact;
+  });
+
+  showSearchView(q);
+}
+
+function showSearchView(q) {
+  viewStab.style.display   = 'none';
+  viewMat.style.display    = 'none';
+  viewDetail.style.display = 'none';
+  viewSearch.style.display = 'block';
+  document.getElementById('btn-stab').classList.remove('active');
+  document.getElementById('btn-mat').classList.remove('active');
+
+  const container = document.getElementById('search-results-container');
+  if (currentResults.length === 0) {
+    container.innerHTML = '<div class="no-results">Žádné výsledky pro „' + escHtml(q) + '"</div>';
+    return;
+  }
+
+  let rows = currentResults.map((t, i) => {
+    const badges = t.mat_groups.map(g =>
+      `<span class="result-badge" style="background:${g.color}">${g.icon} ${g.label.split('—')[0].trim()}</span>`
+    ).join('');
+    return `<tr class="result-row" onclick="showDetail(${i})">
+      <td class="col-zkr" style="width:8%">${escHtml(t.zkratka)}</td>
+      <td class="col-naz" style="width:30%">${escHtml(t.nazev)}</td>
+      <td class="col-odd" style="width:10%">${escHtml(t.oddeleni)}</td>
+      <td class="col-kat" style="width:11%">${escHtml(t.kategorie)}</td>
+      <td class="col-rt"  style="width:9%">${escHtml(t.rt)}</td>
+      <td style="width:32%">${badges}</td>
+    </tr>`;
+  }).join('');
+
+  container.innerHTML =
+    `<div class="search-meta">Nalezeno <strong>${currentResults.length}</strong> výsledků pro „${escHtml(q)}" — klikněte na řádek pro detail</div>
+     <table style="table-layout:fixed;width:100%;border-radius:6px;overflow:hidden;box-shadow:0 1px 4px rgba(0,0,0,.08)">
+       <thead><tr style="background:#f0f0f0">
+         <th style="width:8%;padding:6px 10px;font-size:11px;font-weight:600;border-bottom:1px solid #ddd">Zkratka</th>
+         <th style="width:30%;padding:6px 10px;font-size:11px;font-weight:600;border-bottom:1px solid #ddd">Název vyšetření</th>
+         <th style="width:10%;padding:6px 10px;font-size:11px;font-weight:600;border-bottom:1px solid #ddd">Oddělení</th>
+         <th style="width:11%;padding:6px 10px;font-size:11px;font-weight:600;border-bottom:1px solid #ddd">Kategorie</th>
+         <th style="width:9%;padding:6px 10px;font-size:11px;font-weight:600;border-bottom:1px solid #ddd">RT stabilita</th>
+         <th style="width:32%;padding:6px 10px;font-size:11px;font-weight:600;border-bottom:1px solid #ddd">Odběrový materiál</th>
+       </tr></thead>
+       <tbody style="background:white">${rows}</tbody>
+     </table>`;
+}
+
+// --- Detail vyšetření ---
+function showDetail(idx) {
+  const t = currentResults[idx];
+  if (!t) return;
+
+  viewSearch.style.display = 'none';
+  viewDetail.style.display = 'block';
+
+  const matBadges = t.mat_groups.map(g =>
+    `<span class="mat-badge" style="background:${g.color}">${g.icon} ${g.label}</span>`
+  ).join('');
+
+  const pokyny = t.klinicke_informace
+    ? `<div class="detail-pokyny"><h3>Pokyny k odběru</h3><p>${escHtml(t.klinicke_informace)}</p></div>`
+    : '';
+
+  const typText = t.typ_materialu
+    ? `<div class="detail-typ-text">${escHtml(t.typ_materialu)}</div>`
+    : '';
+
+  document.getElementById('detail-content').innerHTML = `
+    <button class="back-btn" onclick="backToResults()">← Zpět na výsledky</button>
+    <div class="detail-card">
+      <div class="detail-head">
+        <span class="detail-zkratka">${escHtml(t.zkratka)}</span>
+        <div class="detail-nazev">${escHtml(t.nazev)}</div>
+        <div class="detail-meta-line">${escHtml(t.oddeleni)} &nbsp;·&nbsp; ${escHtml(t.kategorie)}</div>
+      </div>
+      <div class="detail-body">
+        <div class="detail-col">
+          <h3>Odběrový materiál</h3>
+          <div class="mat-badge-block">${matBadges}</div>
+          ${typText}
+        </div>
+        <div class="detail-col">
+          <h3>Stabilita vzorku</h3>
+          <div class="stab-grid">
+            <span class="stab-lbl">Pokojová teplota&nbsp;(15–25 °C)</span>
+            <span class="stab-val">${escHtml(t.rt) || '—'}</span>
+            <span class="stab-lbl">Chlad&nbsp;(2–8 °C)</span>
+            <span class="stab-val">${escHtml(t.cold) || '—'}</span>
+            <span class="stab-lbl">Mraz&nbsp;(−20 °C)</span>
+            <span class="stab-val">${escHtml(t.freeze) || '—'}</span>
+          </div>
+          <div>
+            <span class="stab-group-pill" style="background:${t.stab_color}">
+              ${t.stab_icon} ${escHtml(t.stab_label)}
+            </span>
+          </div>
+        </div>
+      </div>
+      ${pokyny}
+    </div>`;
+}
+
+function backToResults() {
+  viewDetail.style.display = 'none';
+  viewSearch.style.display = 'block';
+}
+
+function escHtml(s) {
+  if (!s) return '';
+  return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+"""
+
+
+# ===========================================================================
+# HTML ŠABLONA
+# ===========================================================================
 
 def build_html(leg_stab: str, sec_stab: str, leg_mat: str, sec_mat: str,
-               total: int, n_stab_rows: int, n_mat_rows: int) -> str:
+               search_json: str, total: int, n_stab: int, n_mat: int) -> str:
     today = date.today().strftime("%d. %m. %Y")
+    js = JS.replace("__SEARCH_DATA__", search_json)
     return f"""<!DOCTYPE html>
 <html lang="cs">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Laboratorní přehled — Stabilita & Odběrový materiál</title>
+<title>Laboratorní přehled — Stabilita &amp; Odběrový materiál</title>
 <style>{CSS}</style>
 </head>
 <body>
@@ -439,12 +731,18 @@ def build_html(leg_stab: str, sec_stab: str, leg_mat: str, sec_mat: str,
 <div class="page-header">
   <h1>Laboratorní přehled vzorků — BHSI</h1>
   <div class="subtitle">Přehled pro lékaře a sestry — stabilita vzorků a odběrový materiál</div>
-  <div class="meta">Oddělení: Biochemie, Hematologie, Moče, Sérologie, Bakteriologie, PCR &nbsp;|&nbsp; Vygenerováno: {today} &nbsp;|&nbsp; Celkem vyšetření: {total}</div>
+  <div class="meta">Oddělení: Biochemie, Hematologie, Moče, Sérologie, Bakteriologie, PCR &nbsp;|&nbsp; Vygenerováno: {today} &nbsp;|&nbsp; Celkem: {total} vyšetření</div>
+</div>
+
+<div class="search-wrap">
+  <input id="search-input" class="search-input" type="search" autocomplete="off"
+         placeholder="🔍  Hledat zkratku nebo název vyšetření…">
+  <button id="search-clear" class="search-clear" title="Smazat hledání">✕</button>
 </div>
 
 <div class="tab-bar">
-  <button class="tab-btn active" id="btn-stab" onclick="showTab('stab')">⏱ Stabilita vzorků ({n_stab_rows} skupin)</button>
-  <button class="tab-btn"        id="btn-mat"  onclick="showTab('mat')">🧪 Odběrový materiál ({n_mat_rows} skupin)</button>
+  <button class="tab-btn active" id="btn-stab" onclick="showTab('stab', this)">⏱ Stabilita vzorků ({n_stab} skupin)</button>
+  <button class="tab-btn"        id="btn-mat"  onclick="showTab('mat',  this)">🧪 Odběrový materiál ({n_mat} skupin)</button>
 </div>
 
 <div id="view-stab">
@@ -453,8 +751,16 @@ def build_html(leg_stab: str, sec_stab: str, leg_mat: str, sec_mat: str,
 </div>
 
 <div id="view-mat" style="display:none">
-  <div class="legend"><div class="leg-title">LEGENDA — skupiny dle typu odběrového materiálu (test s kombinovaným odběrem je ve více skupinách):</div>{leg_mat}</div>
+  <div class="legend"><div class="leg-title">LEGENDA — skupiny dle typu odběrového materiálu (kombinovaný odběr → více skupin):</div>{leg_mat}</div>
   {sec_mat}
+</div>
+
+<div id="view-search">
+  <div id="search-results-container"></div>
+</div>
+
+<div id="view-detail">
+  <div id="detail-content"></div>
 </div>
 
 <footer>
@@ -464,15 +770,7 @@ def build_html(leg_stab: str, sec_stab: str, leg_mat: str, sec_mat: str,
   <em>Při nejasnostech kontaktujte laboratoř. RT = 15–25 °C, Chlad = 2–8 °C, Mraz = −20 °C.</em>
 </footer>
 
-<script>
-function showTab(name) {{
-  document.getElementById('view-stab').style.display = name === 'stab' ? 'block' : 'none';
-  document.getElementById('view-mat').style.display  = name === 'mat'  ? 'block' : 'none';
-  document.getElementById('btn-stab').classList.toggle('active', name === 'stab');
-  document.getElementById('btn-mat').classList.toggle('active',  name === 'mat');
-}}
-</script>
-
+<script>{js}</script>
 </body>
 </html>"""
 
@@ -493,12 +791,12 @@ def main():
 
     grouped_stab: dict[int, list] = {g["id"]: [] for g in GROUPS_STAB}
     grouped_mat:  dict[int, list] = {g["id"]: [] for g in GROUPS_MAT}
+    rows_with_meta = []
 
     for row in rows:
         stabilita = row["stabilita"] or ""
         rt_h = extract_rt_hours(stabilita)
 
-        # Stabilita — jeden test do jedné skupiny
         grouped_stab[assign_stab_group(rt_h)].append({
             "oddeleni": row["oddeleni"], "zkratka": row["zkratka"],
             "nazev": row["nazev"], "kategorie": row["kategorie"],
@@ -506,39 +804,39 @@ def main():
             "poznamka": row["poznamka"],
         })
 
-        # Materiál — test může být ve více skupinách
+        rt_b = ("Ihned" if rt_h == -1 else
+                extract_rt_str(stabilita, rt_h) if rt_h is not None else "—")
         mat_entry = {
             "oddeleni": row["oddeleni"], "zkratka": row["zkratka"],
             "nazev": row["nazev"], "kategorie": row["kategorie"],
             "typ_materialu": row["typ_materialu"],
-            "stabilita": stabilita,
-            "rt_brief": (lambda s: s)(
-                "Ihned" if rt_h == -1 else
-                extract_rt_str(stabilita, rt_h) if rt_h is not None else "—"
-            ),
+            "stabilita": stabilita, "rt_brief": rt_b,
             "klinicke_informace": row["klinicke_informace"],
         }
         for gid in assign_mat_groups(row["typ_materialu"]):
             grouped_mat[gid].append(mat_entry)
 
-    n_stab = len([g for g in GROUPS_STAB if grouped_stab.get(g["id"])])
-    n_mat  = len([g for g in GROUPS_MAT  if grouped_mat.get(g["id"])])
+        rows_with_meta.append({
+            "zkratka": row["zkratka"], "nazev": row["nazev"],
+            "oddeleni": row["oddeleni"], "kategorie": row["kategorie"],
+            "typ_materialu": row["typ_materialu"],
+            "stabilita": stabilita, "rt_hours": rt_h,
+            "klinicke_informace": row["klinicke_informace"],
+        })
 
-    print("Stabilita — skupiny:")
-    for g in GROUPS_STAB:
-        print(f"  Sk.{g['id']:2d} {g['label'][:45]}: {len(grouped_stab[g['id']])} testů")
-    print("\nMateriál — skupiny:")
-    for g in GROUPS_MAT:
-        print(f"  Sk.{g['id']:2d} {g['label'][:45]}: {len(grouped_mat[g['id']])} testů")
+    n_stab = sum(1 for g in GROUPS_STAB if grouped_stab.get(g["id"]))
+    n_mat  = sum(1 for g in GROUPS_MAT  if grouped_mat.get(g["id"]))
 
     leg_stab, sec_stab = build_stab_sections(grouped_stab)
     leg_mat,  sec_mat  = build_mat_sections(grouped_mat)
+    search_json = build_search_data(rows_with_meta)
 
     html = build_html(leg_stab, sec_stab, leg_mat, sec_mat,
-                      len(rows), n_stab, n_mat)
+                      search_json, len(rows), n_stab, n_mat)
     OUT_PATH.write_text(html, encoding="utf-8")
-    print(f"\nVýstup: {OUT_PATH.resolve()}")
+    print(f"Výstup: {OUT_PATH.resolve()}")
     print(f"Velikost: {OUT_PATH.stat().st_size:,} bytů")
+    print(f"Testů v search JSON: {len(rows_with_meta)}")
 
 
 if __name__ == "__main__":
