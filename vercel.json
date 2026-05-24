@@ -1,0 +1,6 @@
+{
+  "outputDirectory": "STABILITA_data",
+  "rewrites": [
+    { "source": "/", "destination": "/stabilita_prehled.html" }
+  ]
+}

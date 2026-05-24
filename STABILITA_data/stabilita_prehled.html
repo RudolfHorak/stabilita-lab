@@ -1,0 +1,771 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Stabilita laboratorních vzorků — všechna oddělení</title>
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+    font-family: 'Segoe UI', Arial, sans-serif;
+    font-size: 12px;
+    color: #1a1a1a;
+    background: #f5f6fa;
+    padding: 20px;
+}
+.page-header {
+    background: #1a3a5c;
+    color: white;
+    padding: 18px 24px;
+    border-radius: 6px;
+    margin-bottom: 20px;
+}
+.page-header h1 { font-size: 20px; font-weight: 700; margin-bottom: 4px; }
+.page-header .subtitle { font-size: 12px; opacity: 0.85; }
+.page-header .meta { font-size: 11px; opacity: 0.7; margin-top: 6px; }
+.legend {
+    display: flex; flex-wrap: wrap; gap: 8px;
+    background: white; padding: 12px 16px; border-radius: 6px;
+    margin-bottom: 20px; border: 1px solid #ddd;
+}
+.legend-title { width: 100%; font-weight: 600; font-size: 11px; color: #555; margin-bottom: 4px; }
+.legend-item {
+    display: flex; align-items: center; gap: 5px;
+    font-size: 11px; padding: 3px 8px; border-radius: 4px;
+    border: 1px solid #ccc;
+}
+.group-section {
+    margin-bottom: 24px;
+    border-radius: 6px;
+    overflow: hidden;
+    border: 2px solid;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.group-header {
+    padding: 10px 16px;
+    color: white;
+}
+.group-header h2 { font-size: 14px; font-weight: 700; }
+.group-header .group-sub { font-size: 11px; opacity: 0.9; margin-top: 2px; }
+.group-count { float: right; font-size: 11px; opacity: 0.85; font-weight: 400; }
+table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    background: white;
+}
+thead tr { background: #f0f0f0; }
+th {
+    padding: 6px 10px;
+    text-align: left;
+    font-size: 11px;
+    font-weight: 600;
+    color: #444;
+    border-bottom: 1px solid #ddd;
+    white-space: nowrap;
+}
+td {
+    padding: 5px 10px;
+    font-size: 11px;
+    border-bottom: 1px solid #eee;
+    vertical-align: top;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+td.col-note {
+    white-space: normal;
+    word-wrap: break-word;
+}
+tr:last-child td { border-bottom: none; }
+tr:hover td { background: rgba(0,0,0,0.02); }
+.col-oddeleni { color: #555; font-size: 10px; white-space: nowrap; font-style: italic; }
+.col-zkratka { font-weight: 700; white-space: nowrap; color: #1a3a5c; }
+.col-nazev { font-weight: 500; }
+.col-kat { color: #666; font-size: 10px; white-space: nowrap; }
+.col-rt { font-weight: 700; }
+.col-cold { color: #1a5276; }
+.col-freeze { color: #4a235a; }
+.col-note { color: #7f4f00; font-size: 10px; font-style: italic; max-width: 220px; }
+.badge-urgent { background: #c0392b; color: white; padding: 1px 5px; border-radius: 3px; font-size: 10px; }
+footer {
+    margin-top: 24px;
+    padding: 12px 16px;
+    background: white;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    font-size: 11px;
+    color: #666;
+}
+@media print {
+    body { background: white; padding: 8px; font-size: 10px; }
+    .page-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .group-header { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+    .group-section { break-inside: avoid; page-break-inside: avoid; box-shadow: none; }
+    table { break-inside: auto; }
+    tr { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<div class="page-header">
+  <h1>Stabilita laboratorních vzorků</h1>
+  <div class="subtitle">Přehled pro lékaře a sestry — jak dlouho a za jakých podmínek vydrží odebraný vzorek do zpracování</div>
+  <div class="meta">Oddělení: Biochemie, Hematologie, Moče, Sérologie, Bakteriologie, PCR &nbsp;|&nbsp; Vygenerováno: 24. 05. 2026 &nbsp;|&nbsp; Celkem vyšetření: 421</div>
+</div>
+
+<div class="legend">
+  <div class="legend-title">LEGENDA — skupiny dle stability při pokojové teplotě (15–25 °C):</div>
+  <span class="legend-item" style="background:#fde8e8;border-color:#c0392b">⚠️ IHNED (10)</span><span class="legend-item" style="background:#fde8e8;border-color:#e74c3c">🔴 Do 2 hodin při pokojové teplotě (26)</span><span class="legend-item" style="background:#fdebd0;border-color:#d35400">🟠 Do 4 hodin při pokojové teplotě (11)</span><span class="legend-item" style="background:#fef5e7;border-color:#e67e22">🔶 Do 6 hodin při pokojové teplotě (53)</span><span class="legend-item" style="background:#fef9e7;border-color:#b7950b">🟡 Do 8 hodin při pokojové teplotě (12)</span><span class="legend-item" style="background:#fdfefe;border-color:#aed6f1">🔵 Do 24 hodin při pokojové teplotě (90)</span><span class="legend-item" style="background:#eafaf1;border-color:#82e0aa">🟢 2–3 dny při pokojové teplotě (21)</span><span class="legend-item" style="background:#e9f7ef;border-color:#27ae60">✅ 4 dny a více při pokojové teplotě (16)</span><span class="legend-item" style="background:#eaf4fb;border-color:#5dade2">❄️ Pouze chlazené (+2 až +8 °C) / zvláštní podmínky (182)</span>
+</div>
+
+
+<div class="group-section" style="border-color:#c0392b">
+  <div class="group-header" style="background:#c0392b">
+    <h2>⚠️ IHNED — zpracovat okamžitě <span class="group-count">10 vyšetření</span></h2>
+    <div class="group-sub">Labilní analyty vyžadující okamžité zpracování nebo zmrazení bezprostředně po odběru</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ADRE</td><td class="col-nazev">Adrenalin</td><td class="col-kat">Hormony</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ACTH</td><td class="col-nazev">Adrenokortikotropin</td><td class="col-kat">Hormony</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DOPA</td><td class="col-nazev">Dopamin</td><td class="col-kat">Hormony</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">NORADRE</td><td class="col-nazev">Noradrenalin</td><td class="col-kat">Hormony</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">REN</td><td class="col-nazev">Renin</td><td class="col-kat">Hormony</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">1 měsíc</td><td class="col-note">Odběr se provádí vleže po celonočním klidu na lůžku, v případě ambulantního odběru vsedě po 30 min klidové polohy. Doporučujeme odebranou krev do 4 ho…</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">SERO</td><td class="col-nazev">Serotonin</td><td class="col-kat">Hormony</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">HMBG</td><td class="col-nazev">Hamburgerův sediment</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">HAE</td><td class="col-nazev">UHAMB_Erytrocyty</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">HAL</td><td class="col-nazev">UHAMB_Leukocyty</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">HAV</td><td class="col-nazev">UHAMB_Válce</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt"><span class="badge-urgent">Ihned</span></td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="group-section" style="border-color:#e74c3c">
+  <div class="group-header" style="background:#e74c3c">
+    <h2>🔴 Do 2 hodin při pokojové teplotě <span class="group-count">26 vyšetření</span></h2>
+    <div class="group-sub">Vzorky musí být doručeny do laboratoře do 2 hodin od odběru</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FOL</td><td class="col-nazev">Kyselina listová (folát)</td><td class="col-kat">Metabolismus železa</td><td class="col-rt">30 min</td><td class="col-cold">1 den</td><td class="col-freeze">8 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">VB12</td><td class="col-nazev">Vitamin B12</td><td class="col-kat">Metabolismus železa</td><td class="col-rt">15 min</td><td class="col-cold">1 den</td><td class="col-freeze">8 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UBAKTM</td><td class="col-nazev">Bakterie (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">BILI</td><td class="col-nazev">Bilirubin</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">PROT</td><td class="col-nazev">Bílkovina</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UEPDM</td><td class="col-nazev">Epitelie dlaždicové (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UEPKM</td><td class="col-nazev">Epitelie kulaté (přechodné, v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UEPREM</td><td class="col-nazev">Epitelie renální (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UERYM</td><td class="col-nazev">Erytrocyty (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">GLUK</td><td class="col-nazev">Glukóza</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UHLEM</td><td class="col-nazev">Hlen (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">HUST</td><td class="col-nazev">Hustota</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">KETO</td><td class="col-nazev">Ketony</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">KREV</td><td class="col-nazev">Krev</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UKRYM</td><td class="col-nazev">Krystaly (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UKVASM</td><td class="col-nazev">Kvasinky (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">LEU</td><td class="col-nazev">Leukocyty</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">ULEUM</td><td class="col-nazev">Leukocyty (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">XMS</td><td class="col-nazev">Moč chemicky + sediment</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">NITR</td><td class="col-nazev">Nitrity</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">pH</td><td class="col-nazev">PH</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">USPERM</td><td class="col-nazev">Spermie (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UTRICHM</td><td class="col-nazev">Trichomonády (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UBLG</td><td class="col-nazev">Urobilinogen</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UVAHM</td><td class="col-nazev">Válce hyalinní (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UVAXM</td><td class="col-nazev">Válce ostatní (v močovém sedimentu)</td><td class="col-kat">Vyšetření moče</td><td class="col-rt">2 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="group-section" style="border-color:#d35400">
+  <div class="group-header" style="background:#d35400">
+    <h2>🟠 Do 4 hodin při pokojové teplotě <span class="group-count">11 vyšetření</span></h2>
+    <div class="group-sub">Vzorky musí být doručeny do laboratoře do 4 hodin od odběru</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ALP</td><td class="col-nazev">ALP</td><td class="col-kat">Enzymy</td><td class="col-rt">4 hod</td><td class="col-cold">3 dny</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ALPK</td><td class="col-nazev">ALP kostní iso (Osteáza)</td><td class="col-kat">Kostní markery</td><td class="col-rt">4 hod</td><td class="col-cold">3 dny</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">OC</td><td class="col-nazev">Osteokalcin NMID</td><td class="col-kat">Kostní markery</td><td class="col-rt">4 hod</td><td class="col-cold">24 hodin</td><td class="col-freeze">1 rok</td><td class="col-note">Pro stanovení je preferováno vyšetření ze séra. Sérum urychleně centrifugovat a separovat.</td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">AT3</td><td class="col-nazev">Antitrombin</td><td class="col-kat">Koagulace</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">PDIM</td><td class="col-nazev">D-dimery (FEU)</td><td class="col-kat">Koagulace</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">FB</td><td class="col-nazev">Fibrinogen</td><td class="col-kat">Koagulace</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">TC</td><td class="col-nazev">Trombinový čas</td><td class="col-kat">Koagulace</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">APTT</td><td class="col-nazev">aPTT</td><td class="col-kat">Koagulace</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">APTI</td><td class="col-nazev">aPTT ratio</td><td class="col-kat">Koagulace</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">FW-1[2]</td><td class="col-nazev">FW 1 hod</td><td class="col-kat">Sedimentace erytr.</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">FW-2[2]</td><td class="col-nazev">FW 2 hod</td><td class="col-kat">Sedimentace erytr.</td><td class="col-rt">4 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="group-section" style="border-color:#e67e22">
+  <div class="group-header" style="background:#e67e22">
+    <h2>🔶 Do 6 hodin při pokojové teplotě <span class="group-count">53 vyšetření</span></h2>
+    <div class="group-sub">Vzorky stabilní při pokojové teplotě do 6 hodin</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">CHLAMIDIAT</td><td class="col-nazev">Výtěr z pochvy a cervixu na průkaz antigenu Chlamydia trachomatis</td><td class="col-kat">Průkaz antigenu Chlamydia trach</td><td class="col-rt">6 hod</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">CHLAM</td><td class="col-nazev">Výtěr z uretry na průkaz antigenu Chlamydia trachomatis</td><td class="col-kat">Průkaz antigenu Chlamydia trach</td><td class="col-rt">6 hod</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PTH 1-84</td><td class="col-nazev">PTH 1-84</td><td class="col-kat">Hormony</td><td class="col-rt">6 hod</td><td class="col-cold">2 dny</td><td class="col-freeze">6 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">NTBNP</td><td class="col-nazev">NT pro BNP</td><td class="col-kat">Kardiomarkery</td><td class="col-rt">6 hod</td><td class="col-cold">3 dny</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TROPI[2]</td><td class="col-nazev">Troponin I</td><td class="col-kat">Kardiomarkery</td><td class="col-rt">6 hod</td><td class="col-cold">4 dny</td><td class="col-freeze">8 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TROPIHS</td><td class="col-nazev">Troponin I - hs</td><td class="col-kat">Kardiomarkery</td><td class="col-rt">6 hod</td><td class="col-cold">4 dny</td><td class="col-freeze">8 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TNT</td><td class="col-nazev">Troponin T</td><td class="col-kat">Kardiomarkery</td><td class="col-rt">6 hod</td><td class="col-cold">4 dny</td><td class="col-freeze">8 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FE</td><td class="col-nazev">Železo (Fe)</td><td class="col-kat">Metabolismus železa</td><td class="col-rt">6 hod</td><td class="col-cold">3 dny</td><td class="col-freeze">1 rok</td><td class="col-note">Vzhledem k cirkadiánnímu rytmu odebírejte vždy v ranních hodinách. Nutno zabránit hemolýze.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">HCY</td><td class="col-nazev">Homocystein</td><td class="col-kat">Ostatní nezařazená vyšetření</td><td class="col-rt">6 hod</td><td class="col-cold">14 dní</td><td class="col-freeze">1 rok</td><td class="col-note">Doprava na ledu. Ihned centrifugovat a separovat. Pokud není analyzováno v den odběru, zmrazit.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CPEP</td><td class="col-nazev">C-peptid</td><td class="col-kat">Substráty</td><td class="col-rt">5 hod</td><td class="col-cold">5 dní</td><td class="col-freeze">2 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MCH</td><td class="col-nazev">Barvivo erytrocytů</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">BASEG</td><td class="col-nazev">Bazofilní segment</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">BSEA</td><td class="col-nazev">Bazofily - abs.počet</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">BLAST</td><td class="col-nazev">Blast</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">PLB</td><td class="col-nazev">Buňka plazmatická</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">DIFF</td><td class="col-nazev">Diferenciál mikroskopický</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">KODIFP</td><td class="col-nazev">Diferenciál př.</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">RDW</td><td class="col-nazev">Distribuční křivka pro erytrocyty (Erytr. Křivka)</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">PDW</td><td class="col-nazev">Distribuční křivka pro trombocyty (Tromb. křivka)</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">EOSEG</td><td class="col-nazev">Eozinofilní segment</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">EOAM</td><td class="col-nazev">Eozinofily - abs.počet</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">RBC</td><td class="col-nazev">Erytrocyty př.</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">GRANULpr</td><td class="col-nazev">Granulocyt nezralý</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">GRANULabs</td><td class="col-nazev">Granulocyt nezralý - abs.počet</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">HTK</td><td class="col-nazev">Hematokrit</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">PCT</td><td class="col-nazev">Hematoktrit trombocytů (Tromb. hematokr.)</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">HGB</td><td class="col-nazev">Hemoglobin</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">KODIF</td><td class="col-nazev">Krevní obraz s dif. 5 populačním</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">KO</td><td class="col-nazev">Krevní obraz základní</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">WBC</td><td class="col-nazev">Leukocyty př.</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">BLY</td><td class="col-nazev">Lymfocyt</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">LYMFO</td><td class="col-nazev">Lymfocyt</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">BLA</td><td class="col-nazev">Lymfocyty - abs.počet</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MMC</td><td class="col-nazev">Metamyelocyty</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MONO</td><td class="col-nazev">Monocyt</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MONOC</td><td class="col-nazev">Monocyty</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MOA</td><td class="col-nazev">Monocyty - abs.počet</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MYBL</td><td class="col-nazev">Myeloblasty</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MY</td><td class="col-nazev">Myelocyty</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">BNSEG</td><td class="col-nazev">Neutrofilní segment</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">NEA</td><td class="col-nazev">Neutrofily - abs.počet</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">PMC</td><td class="col-nazev">Promyelocyty</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">RETR</td><td class="col-nazev">Retikulocyty relat.</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">SEGB</td><td class="col-nazev">Segment bazofilní</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">SEGE</td><td class="col-nazev">Segment eozinofilní</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">SEGN</td><td class="col-nazev">Segment neutrofilní</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MCHC</td><td class="col-nazev">Střední barevná koncentrace</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MCV</td><td class="col-nazev">Střední objem erytrocytu</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">MPV</td><td class="col-nazev">Střední objem trombocytů (Tromb.stř.obj.)</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">PLT</td><td class="col-nazev">Trombocyty př.</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">TYCN</td><td class="col-nazev">Tyč neutrofilní</td><td class="col-kat">Hematologie</td><td class="col-rt">5 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">TQ-INR</td><td class="col-nazev">PT INR</td><td class="col-kat">Koagulace</td><td class="col-rt">6 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">TQ-PTR</td><td class="col-nazev">PT-ratio, protrombin.poměr</td><td class="col-kat">Koagulace</td><td class="col-rt">6 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="group-section" style="border-color:#b7950b">
+  <div class="group-header" style="background:#b7950b">
+    <h2>🟡 Do 8 hodin při pokojové teplotě <span class="group-count">12 vyšetření</span></h2>
+    <div class="group-sub">Vzorky stabilní při pokojové teplotě do 8 hodin</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CHE</td><td class="col-nazev">Cholinesteráza</td><td class="col-kat">Enzymy</td><td class="col-rt">8 hod</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ATG</td><td class="col-nazev">Anti TG</td><td class="col-kat">Hormony</td><td class="col-rt">8 hod</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ATPO</td><td class="col-nazev">Anti TPO</td><td class="col-kat">Hormony</td><td class="col-rt">8 hod</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TRAK</td><td class="col-nazev">Anti TSHr</td><td class="col-kat">Hormony</td><td class="col-rt">8 hod</td><td class="col-cold">3 dny</td><td class="col-freeze">2 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">KORO</td><td class="col-nazev">Kortizol</td><td class="col-kat">Hormony</td><td class="col-rt">8 hod</td><td class="col-cold">2 týdny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TEST</td><td class="col-nazev">Testosteron</td><td class="col-kat">Hormony</td><td class="col-rt">8 hod</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CL</td><td class="col-nazev">Chloridy (Cl)</td><td class="col-kat">Ionty, stopové prvky</td><td class="col-rt">8 hod</td><td class="col-cold">1 den</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">K</td><td class="col-nazev">Draslík (K)</td><td class="col-kat">Ionty, stopové prvky</td><td class="col-rt">8 hod</td><td class="col-cold">1 den</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">NA</td><td class="col-nazev">Sodík (Na)</td><td class="col-kat">Ionty, stopové prvky</td><td class="col-rt">8 hod</td><td class="col-cold">1 den</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">MYO</td><td class="col-nazev">Myoglobin</td><td class="col-kat">Kardiomarkery</td><td class="col-rt">8 hod</td><td class="col-cold">1 týden</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">AFPS</td><td class="col-nazev">AFP screening</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">8 hod</td><td class="col-cold">2 dny</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">EST3</td><td class="col-nazev">Estriol nekonjugovaný</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">8 hod</td><td class="col-cold">14 dní</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="group-section" style="border-color:#aed6f1">
+  <div class="group-header" style="background:#2980b9">
+    <h2>🔵 Do 24 hodin při pokojové teplotě <span class="group-count">90 vyšetření</span></h2>
+    <div class="group-sub">Vzorky stabilní při pokojové teplotě do 24 hodin</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">PUNKTAT</td><td class="col-nazev">Punktáty, tekutiny, hnis, tkáně a stěry z abscesů, píštělí</td><td class="col-kat">Bakteriologie ostatní</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">KUZE</td><td class="col-nazev">Stěry z ran, ložisek a povrchových defektů kůže</td><td class="col-kat">Bakteriologie ostatní</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">SPOJIVKA</td><td class="col-nazev">Výtěr z oka, ze spojivkového vaku</td><td class="col-kat">Bakteriologie ostatní</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">STR_UCHO</td><td class="col-nazev">Výtěr ze středního ucha</td><td class="col-kat">Bakteriologie ostatní</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">UCHO</td><td class="col-nazev">Výtěr ze zevního zvukovodu</td><td class="col-kat">Bakteriologie ostatní</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">MYKOPLASMATA</td><td class="col-nazev">Výtěr z pochvy a cervixu na průkaz mykoplasmat</td><td class="col-kat">Kultivace urogenitálních mykopl</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">MYKOP</td><td class="col-nazev">Výtěr z uretry na průkaz mykoplasmat</td><td class="col-kat">Kultivace urogenitálních mykopl</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">ESBL</td><td class="col-nazev">Screening ESBL</td><td class="col-kat">Screening ESBL</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Jedná se o cílené vyhledávání Enterobacteriaceae kmenů produkujících širokospektrou betalaktamázů typu AmpC a ESBL Ostatní kmeny se netestují.</td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">MRSA</td><td class="col-nazev">Screening MRSA</td><td class="col-kat">Screening MRSA</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Jedná se o cílené vyhledávání Methicilin/oxacilin rezistentního kmene Staphylococcus aureus s následným stanovením citlivosti na ATB. Ostatní kmeny se…</td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">LEGI</td><td class="col-nazev">Cílená kultivace Legionella pneumohila (Legionella species) - sputum, TAS, BAL</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">STB</td><td class="col-nazev">Sputum, TAS, BAL a stěr z tracheostomické kanyly</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">JAZYK</td><td class="col-nazev">Výtěr z dutiny ústní, stěr z jazyka</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">KRK</td><td class="col-nazev">Výtěr z krku, výtěr z tonzil</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">LARYNG</td><td class="col-nazev">Výtěr z laryngu</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">NASOFARYNG</td><td class="col-nazev">Výtěr z nasofaryngu</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">NOS</td><td class="col-nazev">Výtěr z nosu</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">SEKR</td><td class="col-nazev">Kultivace ejakulátu a prostatického sekretu</td><td class="col-kat">Vyšetření pohlavní soustavy</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">POCHVA</td><td class="col-nazev">Výtěr z pochvy a cervixu na kultivační vyšetření a screening Str.agalactiae</td><td class="col-kat">Vyšetření pohlavní soustavy</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">GRAHAM</td><td class="col-nazev">Provedení Grahamova stěru na průkaz Enterobius vermicularis (Roup dětský)</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Odběr se provádí ráno, před provedením osobní hygieny. Nelepit identifikační štítky doprostřed podložního sklíčka a používat průhlednou izolepu!</td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">REKTUM</td><td class="col-nazev">Výtěr z rekta</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Součástí vyšetření je kultivační průkaz Campylobacter sp., Yersinia enterocolytica, u dětí do 3 let a u dospělých starších 60 let průkaz enteropatogen…</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ASLO</td><td class="col-nazev">ASLO</td><td class="col-kat">Bílkoviny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CRP</td><td class="col-nazev">CRP</td><td class="col-kat">Bílkoviny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">RF</td><td class="col-nazev">RF</td><td class="col-kat">Bílkoviny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">AMP</td><td class="col-nazev">AMP (Amfetamin)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">BAR</td><td class="col-nazev">BAR (Barbituráty)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">BZO</td><td class="col-nazev">BZO (Bemzodiazepiny)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">COC</td><td class="col-nazev">COC (Kokain)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">MDMA</td><td class="col-nazev">MDMA (Extáze)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">MET</td><td class="col-nazev">MET (Metamfetamin)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">MOP</td><td class="col-nazev">MOP (Opiáty - morfin)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">MTD</td><td class="col-nazev">MTD (Methadon)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PCP</td><td class="col-nazev">PCP (Fencyklidin)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TCA</td><td class="col-nazev">TCA (tricyklická antidepresiva)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">THC</td><td class="col-nazev">THC (Canabinoidy)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">1 den</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PAMS</td><td class="col-nazev">AMS-pankreatická</td><td class="col-kat">Enzymy</td><td class="col-rt">1 den</td><td class="col-cold">2 týdny</td><td class="col-freeze">8 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DHEAS</td><td class="col-nazev">DHEA-SO4</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">2 týdny</td><td class="col-freeze">12 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ESTD</td><td class="col-nazev">Estradiol</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FSH</td><td class="col-nazev">FSH</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">HCG</td><td class="col-nazev">HCG</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">3 dny</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">LH</td><td class="col-nazev">LH</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PRGS</td><td class="col-nazev">Progesteron</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">10 dní</td><td class="col-freeze">6 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PRL</td><td class="col-nazev">Prolaktin</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">T3</td><td class="col-nazev">T3 celkový</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">6 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FT3</td><td class="col-nazev">T3 volný</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">6 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">T4</td><td class="col-nazev">T4 celkový</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">6 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FT4</td><td class="col-nazev">T4 volný</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">6 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note">Transport krve do laboratoře do 6 hodin od odběru. Kontrola léčby by měla být za pravidelného užívání po požití ranní dávky.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TSH</td><td class="col-nazev">TSH</td><td class="col-kat">Hormony</td><td class="col-rt">1 den</td><td class="col-cold">7 dní</td><td class="col-freeze">6 měsíců</td><td class="col-note">Vzhledem k diurnálnímu rytmu odebírejte pokud možno vždy ráno, nalačno.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">IGA</td><td class="col-nazev">IgA</td><td class="col-kat">Imunoglobuliny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">IGG</td><td class="col-nazev">IgG</td><td class="col-kat">Imunoglobuliny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">IGM</td><td class="col-nazev">IgM</td><td class="col-kat">Imunoglobuliny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DIGO</td><td class="col-nazev">Digoxin</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">Li</td><td class="col-nazev">Lithium (Li)</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PINP</td><td class="col-nazev">PINP</td><td class="col-kat">Kostní markery</td><td class="col-rt">1 den</td><td class="col-cold">5 dnů</td><td class="col-freeze">6 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">APOA</td><td class="col-nazev">Apolipoprotein AI</td><td class="col-kat">Lipidy a apolipoproteiny</td><td class="col-rt">1 den</td><td class="col-cold">8 dnů</td><td class="col-freeze">3 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">APOB</td><td class="col-nazev">Apolipoprotein B</td><td class="col-kat">Lipidy a apolipoproteiny</td><td class="col-rt">1 den</td><td class="col-cold">8 dnů</td><td class="col-freeze">3 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CHOL</td><td class="col-nazev">Cholesterol</td><td class="col-kat">Lipidy a apolipoproteiny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">HDLC</td><td class="col-nazev">HDL Cholesterol</td><td class="col-kat">Lipidy a apolipoproteiny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">LDL</td><td class="col-nazev">LDL Cholesterol</td><td class="col-kat">Lipidy a apolipoproteiny</td><td class="col-rt">12 hod</td><td class="col-cold">10 dnů</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">LPA</td><td class="col-nazev">Lipoprotein Lp(a)</td><td class="col-kat">Lipidy a apolipoproteiny</td><td class="col-rt">1 den</td><td class="col-cold">15 dnů</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FERI</td><td class="col-nazev">Ferritin</td><td class="col-kat">Metabolismus železa</td><td class="col-rt">1 den</td><td class="col-cold">7 dnů</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TRF</td><td class="col-nazev">Transferin</td><td class="col-kat">Metabolismus železa</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">POGL</td><td class="col-nazev">Glukóza postprandiální</td><td class="col-kat">Monitorování DM</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FPG</td><td class="col-nazev">glukóza lačná - plazma</td><td class="col-kat">Monitorování DM</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">GL0T</td><td class="col-nazev">oGTT</td><td class="col-kat">Monitorování DM</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">GL0T</td><td class="col-nazev">oGTT - těhotné</td><td class="col-kat">Monitorování DM</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UGLU</td><td class="col-nazev">U_Glukóza</td><td class="col-kat">Moč</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">C125</td><td class="col-nazev">CA 125</td><td class="col-kat">Nádorové markery</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">C153</td><td class="col-nazev">CA 15-3</td><td class="col-kat">Nádorové markery</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">C199</td><td class="col-nazev">CA 19-9</td><td class="col-kat">Nádorové markery</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CEA</td><td class="col-nazev">CEA</td><td class="col-kat">Nádorové markery</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">HCGB</td><td class="col-nazev">HCG - beta</td><td class="col-kat">Nádorové markery</td><td class="col-rt">1 den</td><td class="col-cold">3 dny</td><td class="col-freeze">12 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CPL</td><td class="col-nazev">Ceruloplasmin</td><td class="col-kat">Specifické proteiny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">OROSO</td><td class="col-nazev">Orosomukoid</td><td class="col-kat">Specifické proteiny</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">12 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">GLU</td><td class="col-nazev">Glukóza</td><td class="col-kat">Substráty</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">1 rok</td><td class="col-note">Maximální čas od získání do zpracování vzorku, při odběru bez antiglykolytické přísady (fluorid sodný, NaF), je 1 h při teplotě 15-25 °C.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">HCG</td><td class="col-nazev">HCG</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">1 den</td><td class="col-cold">3 dny</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PAPP-A</td><td class="col-nazev">PAPP-A</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">1 den</td><td class="col-cold">8 dní</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FBC</td><td class="col-nazev">hCG free beta</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">1 den</td><td class="col-cold">8 dní</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UGLU</td><td class="col-nazev">U_Glukóza</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">OK_kva</td><td class="col-nazev">Okultní krvácení kvantitativně</td><td class="col-kat">Stolice</td><td class="col-rt">1 den</td><td class="col-cold">15 dnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">SPUTTAS</td><td class="col-nazev">Sputum, TAS, BAL a stěr z tracheostomické kanyly</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">VYTUST</td><td class="col-nazev">Výtěr z dutiny ústní, stěr z jazyka</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">VYTKRK</td><td class="col-nazev">Výtěr z krku, výtěr z tonzil</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">VYTLAR</td><td class="col-nazev">Výtěr z laryngu</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">VYTNSFR</td><td class="col-nazev">Výtěr z nasofaryngu</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">VYTNOS</td><td class="col-nazev">Výtěr z nosu</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">GRAHAMSTER</td><td class="col-nazev">Provedení Grahamova stěru na průkaz Enterobius vermicularis (Roup dětský)</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Odběr se provádí ráno, před provedením osobní hygieny. Nelepit identifikační štítky doprostřed podložního sklíčka a používat průhlednou izolepu!</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">VYTREKT</td><td class="col-nazev">Výtěr z rekta</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">1 den</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Součástí vyšetření je kultivační průkaz Campylobacter sp., Yersinia enterocolytica, u dětí do 3 let a u dospělých starších 60 let průkaz enteropatogen…</td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">TRPS</td><td class="col-nazev">Treponema pallidum - celkové protilátky</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">VZVG</td><td class="col-nazev">VZV IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">VZVM</td><td class="col-nazev">VZV IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">1 den</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="group-section" style="border-color:#82e0aa">
+  <div class="group-header" style="background:#1e8449">
+    <h2>🟢 2–3 dny při pokojové teplotě <span class="group-count">21 vyšetření</span></h2>
+    <div class="group-sub">Vzorky stabilní při pokojové teplotě 2–3 dny</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ALT</td><td class="col-nazev">ALT</td><td class="col-kat">Enzymy</td><td class="col-rt">2 dny</td><td class="col-cold">5 dní</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">AST</td><td class="col-nazev">AST</td><td class="col-kat">Enzymy</td><td class="col-rt">3 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CK</td><td class="col-nazev">CK</td><td class="col-kat">Enzymy</td><td class="col-rt">2 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">GGT</td><td class="col-nazev">GGT</td><td class="col-kat">Enzymy</td><td class="col-rt">3 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CBC</td><td class="col-nazev">Karbamazepin</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">2 dny</td><td class="col-cold">7 dnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">VAL</td><td class="col-nazev">Valproát</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">2 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">VITD</td><td class="col-nazev">celkový hydroxyvitamin D</td><td class="col-kat">Kostní markery</td><td class="col-rt">3 dny</td><td class="col-cold">12 dní</td><td class="col-freeze">3 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">TAG</td><td class="col-nazev">Triacylglyceroly</td><td class="col-kat">Lipidy a apolipoproteiny</td><td class="col-rt">3 dny</td><td class="col-cold">10 dní</td><td class="col-freeze">2 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">STFR</td><td class="col-nazev">Solubilní transferinový receptor</td><td class="col-kat">Metabolismus železa</td><td class="col-rt">2 dny</td><td class="col-cold">7 dnů</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">GHBA1C</td><td class="col-nazev">Glykovaný hemoglobin HbA1c</td><td class="col-kat">Monitorování DM</td><td class="col-rt">2 dny</td><td class="col-cold">5 dnů</td><td class="col-freeze">—</td><td class="col-note">Po odběru co nejdříve transportovat do laboratoře.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UP</td><td class="col-nazev">U_Fosfor anorg. (P)</td><td class="col-kat">Moč</td><td class="col-rt">2 dny</td><td class="col-cold">3 dny</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UKREA</td><td class="col-nazev">U_Kreatinin</td><td class="col-kat">Moč</td><td class="col-rt">2 dny</td><td class="col-cold">6 dnů</td><td class="col-freeze">24 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UKM</td><td class="col-nazev">U_Kyselina močová</td><td class="col-kat">Moč</td><td class="col-rt">3 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UUREA</td><td class="col-nazev">U_UREA</td><td class="col-kat">Moč</td><td class="col-rt">2 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">AFP</td><td class="col-nazev">AFP</td><td class="col-kat">Nádorové markery</td><td class="col-rt">3 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">KREA</td><td class="col-nazev">Kreatinin</td><td class="col-kat">Substráty</td><td class="col-rt">3 dny</td><td class="col-cold">7 dní</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">KMOC</td><td class="col-nazev">Kyselina močová</td><td class="col-kat">Substráty</td><td class="col-rt">3 dny</td><td class="col-cold">7 dní</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UP</td><td class="col-nazev">U_Fosfor anorg. (P)</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">2 dny</td><td class="col-cold">3 dny</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UKREA</td><td class="col-nazev">U_Kreatinin</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">2 dny</td><td class="col-cold">6 dnů</td><td class="col-freeze">24 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UKM</td><td class="col-nazev">U_Kyselina močová</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">3 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UUREA</td><td class="col-nazev">U_UREA</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">2 dny</td><td class="col-cold">1 týden</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="group-section" style="border-color:#27ae60">
+  <div class="group-header" style="background:#1a5e36">
+    <h2>✅ 4 dny a více při pokojové teplotě <span class="group-count">16 vyšetření</span></h2>
+    <div class="group-sub">Vzorky stabilní při pokojové teplotě 4 dny a déle</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ALB</td><td class="col-nazev">Albumin</td><td class="col-kat">Bílkoviny</td><td class="col-rt">1 týden</td><td class="col-cold">30 dní</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CB</td><td class="col-nazev">Bílkovina celková</td><td class="col-kat">Bílkoviny</td><td class="col-rt">1 týden</td><td class="col-cold">4 týdny</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">AMS</td><td class="col-nazev">AMS</td><td class="col-kat">Enzymy</td><td class="col-rt">1 týden</td><td class="col-cold">8 týdnů</td><td class="col-freeze">30 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">LDH</td><td class="col-nazev">LD</td><td class="col-kat">Enzymy</td><td class="col-rt">1 týden</td><td class="col-cold">3 dny</td><td class="col-freeze">4 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">LPS</td><td class="col-nazev">Lipáza</td><td class="col-kat">Enzymy</td><td class="col-rt">1 týden</td><td class="col-cold">3 týdny</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">IGE</td><td class="col-nazev">IgE celkové</td><td class="col-kat">Imunoglobuliny</td><td class="col-rt">1 týden</td><td class="col-cold">1 týden</td><td class="col-freeze">6 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">P</td><td class="col-nazev">Fosfor anorg. (P)</td><td class="col-kat">Ionty, stopové prvky</td><td class="col-rt">4 dny</td><td class="col-cold">7 dnů</td><td class="col-freeze">—</td><td class="col-note">Vzhledem k dennímu rytmu odebírejte pouze ráno. Urychleně centrifugovat a separovat. Vadí hemolýza. Vadí chylozita.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">MG</td><td class="col-nazev">Hořčík (Mg)</td><td class="col-kat">Ionty, stopové prvky</td><td class="col-rt">1 týden</td><td class="col-cold">1 týden</td><td class="col-freeze">1 rok</td><td class="col-note">Centrifugaci a separaci provést do 30 minut od odběru.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CU</td><td class="col-nazev">Měď (Cu)</td><td class="col-kat">Ionty, stopové prvky</td><td class="col-rt">5 dní</td><td class="col-cold">1 týden</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ZN</td><td class="col-nazev">Zinek (Zn)</td><td class="col-kat">Ionty, stopové prvky</td><td class="col-rt">1 týden</td><td class="col-cold">2 týdny</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UCL</td><td class="col-nazev">U_Chloridy (Cl)</td><td class="col-kat">Moč</td><td class="col-rt">1 týden</td><td class="col-cold">2 týdny</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UNA</td><td class="col-nazev">U_Sodík (Na)</td><td class="col-kat">Moč</td><td class="col-rt">2 týdny</td><td class="col-cold">8 týdnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CA-72-4</td><td class="col-nazev">CA 72-4</td><td class="col-kat">Nádorové markery</td><td class="col-rt">1 týden</td><td class="col-cold">30 dní</td><td class="col-freeze">3 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UREA</td><td class="col-nazev">Urea</td><td class="col-kat">Substráty</td><td class="col-rt">1 týden</td><td class="col-cold">2 týdny</td><td class="col-freeze">2 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UCL</td><td class="col-nazev">U_Chloridy (Cl)</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">1 týden</td><td class="col-cold">2 týdny</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UNA</td><td class="col-nazev">U_Sodík (Na)</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">2 týdny</td><td class="col-cold">8 týdnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+    </tbody>
+  </table>
+</div>
+
+<div class="group-section" style="border-color:#5dade2">
+  <div class="group-header" style="background:#1a5276">
+    <h2>❄️ Pouze chlazené (+2 až +8 °C) / zvláštní podmínky <span class="group-count">182 vyšetření</span></h2>
+    <div class="group-sub">Vzorky bez definované stability při pokojové teplotě — uchovávat výhradně v chladu nebo dle speciálních pokynů</div>
+  </div>
+  <table>
+    <colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
+    <thead>
+      <tr>
+        <th>Oddělení</th>
+        <th>Zkratka</th>
+        <th>Název vyšetření</th>
+        <th>Kategorie</th>
+        <th>RT (15–25 °C)</th>
+        <th>Chlad (2–8 °C)</th>
+        <th>Mraz (−20 °C)</th>
+        <th>Preanalytická poznámka</th>
+      </tr>
+    </thead>
+    <tbody>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">KANYLA</td><td class="col-nazev">Kultivace cizorodého materiálu (kanyla)</td><td class="col-kat">Bakteriologie ostatní</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">LEG</td><td class="col-nazev">Průkaz antigenu Legionella pneumophila v moči</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">PNEU</td><td class="col-nazev">Průkaz antigenu Streptococcus pneumoniae v moči</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note">Imunochromatografický test k průkazu solubilního antigenu Str.pneumoniae v moči u pacientů s pneumonií. Negativní výsledek testu nevylučuje infekci. V…</td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">VYTER</td><td class="col-nazev">Výtěr z nosu, výplach z nosu na průkaz antigenů respiračních virů</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">—</td><td class="col-cold">8 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">KULTIVACE</td><td class="col-nazev">Moč na kultivační vyšetření</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">URICULT</td><td class="col-nazev">Odběr moče do soupravy URICULT</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">ANTIGEN CHL.TRACHOMATIS</td><td class="col-nazev">Odběr moče na průkaz antigenu Chlamydia trachomatis</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note">Moč nepatří mezi nejvhodnější materiál k průkazu antigenu Chlamydia trachomatis, protože obsahuje relativně malé množství epiteliálních buněk a hlen p…</td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">MYCOPLASMA/UREAPLASMA</td><td class="col-nazev">Odběr moče na průkaz mykoplasmat</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-rt">—</td><td class="col-cold">48 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">MOP [2]</td><td class="col-nazev">Výtěr z uretry na kultivační vyšetření</td><td class="col-kat">Vyšetření pohlavní soustavy</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Mikrobiální obraz poševní se vyhodnocuje pod mikroskopem, součástí výsledku je mikroskopické hodnocení a vyhodnocení typu MOP zařazením do skupiny I –…</td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">URETRA</td><td class="col-nazev">Výtěr z uretry na kultivační vyšetření</td><td class="col-kat">Vyšetření pohlavní soustavy</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">VULVA</td><td class="col-nazev">Výtěr z vulvy a z labií</td><td class="col-kat">Vyšetření pohlavní soustavy</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">HELICOBACTER</td><td class="col-nazev">Odběr stolice na průkaz antigenu Helicobacter pylori</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">—</td><td class="col-cold">72 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">TOXIN Cl. difficile</td><td class="col-nazev">Odběr stolice na průkaz antigenu a toxinu Clostridium difficile</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note">Důležité je doručit vzorek stolice co nejrychleji do laboratoře, nejlépe do 2 hodin. Vzorky lze zpracovat do 24 hodin od odběru, ale je nutné následně…</td></tr>
+<tr><td class="col-oddeleni">Bakteriologie</td><td class="col-zkratka">VIRY</td><td class="col-nazev">Odběr stolice pro průkaz antigenů Adenovirů, Rotavirů a Norovirů</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">—</td><td class="col-cold">7 dní</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">KRAT</td><td class="col-nazev">KRAT (Kratom)</td><td class="col-kat">Drogy - screening v moči</td><td class="col-rt">—</td><td class="col-cold">48 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ALDO</td><td class="col-nazev">Aldosteron</td><td class="col-kat">Hormony</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Odběr se provádí vleže po celonočním klidu na lůžku, v případě ambulantního odběru vsedě po 30 min klidové polohy. Doporučujeme odebranou krev do 4 ho…</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">GAST</td><td class="col-nazev">Gastrin</td><td class="col-kat">Hormony</td><td class="col-rt">—</td><td class="col-cold">4 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">MELA</td><td class="col-nazev">Melatonin</td><td class="col-kat">Hormony</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">META</td><td class="col-nazev">Metanefrin</td><td class="col-kat">Hormony</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Odběr po 30-ti minutách vleže se zavedeným žilním katétrem. Před odběrem dieta, 4 hodiny nejíst, nepít (zejména vynechat kofein, citrusové plody, sýry…</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">NORMET</td><td class="col-nazev">Normetanefrin</td><td class="col-kat">Hormony</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Odběr po 30-ti minutách vleže se zavedeným žilním katétrem. Před odběrem dieta, 4 hodiny nejíst, nepít (zejména vynechat kofein, citrusové plody, sýry…</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">SHBG</td><td class="col-nazev">SHBG</td><td class="col-kat">Hormony</td><td class="col-rt">—</td><td class="col-cold">8 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CA</td><td class="col-nazev">Vápník (Ca)</td><td class="col-kat">Ionty, stopové prvky</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">32 týdnů</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ETO</td><td class="col-nazev">Etosuximid</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">—</td><td class="col-cold">4 týdny</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PHNO</td><td class="col-nazev">Fenobarbital</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">—</td><td class="col-cold">2 dny</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PHE</td><td class="col-nazev">Fenytoin</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">—</td><td class="col-cold">1 den</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">LAM</td><td class="col-nazev">Lamotrigin</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">—</td><td class="col-cold">5 dnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PRIM</td><td class="col-nazev">Primidon</td><td class="col-kat">Koncentrace léčiv</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CROS</td><td class="col-nazev">Beta-Crosslaps</td><td class="col-kat">Kostní markery</td><td class="col-rt">—</td><td class="col-cold">8 dní</td><td class="col-freeze">25 týdnů</td><td class="col-note">Opakované zamrazování a rozmrazování vzorků není doporučováno.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">NONHDL</td><td class="col-nazev">NON HDL Cholesterol</td><td class="col-kat">Lipidy a apolipoproteiny</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FESA</td><td class="col-nazev">Saturace transferinu - výpočet</td><td class="col-kat">Metabolismus železa</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ADREU</td><td class="col-nazev">U_Adrenalin</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UALB</td><td class="col-nazev">U_Albumin</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">7 dnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ALDO</td><td class="col-nazev">U_Aldosteron</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UAMS</td><td class="col-nazev">U_Amyláza</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ADH</td><td class="col-nazev">U_Antidiuretický hormon</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">2 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UCB</td><td class="col-nazev">U_Bílkovina celková</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DOPAU</td><td class="col-nazev">U_Dopamin</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UK</td><td class="col-nazev">U_Draslík (K)</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UMG</td><td class="col-nazev">U_Hořčík (Mg)</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">5 dnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">HIOK</td><td class="col-nazev">U_Kyselina 5-hydroxyindoloctová</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">VMK</td><td class="col-nazev">U_Kyselina vanilmandlová</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">NORADREU</td><td class="col-nazev">U_Noradrenalin</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">UCA</td><td class="col-nazev">U_Vápník (Ca)</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DUCB</td><td class="col-nazev">dU_CB-odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DUCL</td><td class="col-nazev">dU_Chloridy (Cl) - odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">K[2]</td><td class="col-nazev">dU_Draslík (K) - odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DUP</td><td class="col-nazev">dU_Fosfor anorg. (P)-odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DUMG</td><td class="col-nazev">dU_Hořčík (Mg)-odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">KORTU</td><td class="col-nazev">dU_Kortizol - odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">2 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">HVK</td><td class="col-nazev">dU_Kyselina homovanilová - odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">METU</td><td class="col-nazev">dU_Metanefrin - odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">NORMETU</td><td class="col-nazev">dU_Normetanefrin- odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">DUNA</td><td class="col-nazev">dU_Sodík (Na) - odpad</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">GF-CKD-EPI</td><td class="col-nazev">eGF_CKD-EPI</td><td class="col-kat">Moč</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">KALCI</td><td class="col-nazev">Kalcitonin</td><td class="col-kat">Nádorové markery</td><td class="col-rt">—</td><td class="col-cold">1 den</td><td class="col-freeze">3 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PHI</td><td class="col-nazev">PHI - index zdraví prostaty</td><td class="col-kat">Nádorové markery</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">5 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PSA</td><td class="col-nazev">PSA</td><td class="col-kat">Nádorové markery</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FPSA</td><td class="col-nazev">PSA volný</td><td class="col-kat">Nádorové markery</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FPSA-PSA</td><td class="col-nazev">Poměr FPSA/PSA</td><td class="col-kat">Nádorové markery</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">CDT</td><td class="col-nazev">CDT (karbohydrát deficientní transferin)</td><td class="col-kat">Ostatní nezařazená vyšetření</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">1 rok</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">EALB</td><td class="col-nazev">Albumin (elektroforeticky)</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">EA1G</td><td class="col-nazev">Alfa-1-globulin</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">EA2G</td><td class="col-nazev">Alfa-2-globulin</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">EBGL</td><td class="col-nazev">Beta-globulin</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">EBB1G</td><td class="col-nazev">Beta1globulin</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">EBB2G</td><td class="col-nazev">Beta2globulin</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">ELFOB</td><td class="col-nazev">ELFO bílkovín</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">EGGL</td><td class="col-nazev">Gama-globulin</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">IF</td><td class="col-nazev">Imunofixace</td><td class="col-kat">Screening monokl. bílkovin</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">1 měsíc</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">BIL</td><td class="col-nazev">Bilirubin</td><td class="col-kat">Substráty</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">12 týdnů</td><td class="col-note">Zabraňte hemolýze. Zkumavku nevystavujte světlu (snížení hodnot). Vadí chylozita.</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">BILP</td><td class="col-nazev">Bilirubin konjugovaný</td><td class="col-kat">Substráty</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">12 týdnů</td><td class="col-note">Zabraňte hemolýze. Zkumavku nevystavujte světlu (snížení hodnot).</td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">PLGF</td><td class="col-nazev">PlGF</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">—</td><td class="col-cold">48 hodin</td><td class="col-freeze">6 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">sFLT-1</td><td class="col-nazev">sFLT-1</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">—</td><td class="col-cold">48 hodin</td><td class="col-freeze">6 měsíců</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Biochemie</td><td class="col-zkratka">FLT/PLGF</td><td class="col-nazev">sFlt-1/PlGF</td><td class="col-kat">Vrozené vývojové vady</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">KRSK</td><td class="col-nazev">Krevní skupina</td><td class="col-kat">Imunohematologie</td><td class="col-rt">—</td><td class="col-cold">1týden</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Hematologie</td><td class="col-zkratka">SCRERYP</td><td class="col-nazev">Screening anti-ery protilátek</td><td class="col-kat">Imunohematologie</td><td class="col-rt">—</td><td class="col-cold">1týden</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">ADREU</td><td class="col-nazev">U_Adrenalin</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UALB</td><td class="col-nazev">U_Albumin</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">7 dnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">ALDO</td><td class="col-nazev">U_Aldosteron</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">ADH</td><td class="col-nazev">U_Antidiuretický hormon</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">2 měsíce</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UCB</td><td class="col-nazev">U_Bílkovina celková</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">DOPAU</td><td class="col-nazev">U_Dopamin</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UK</td><td class="col-nazev">U_Draslík (K)</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UMG</td><td class="col-nazev">U_Hořčík (Mg)</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">5 dnů</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">HIOK</td><td class="col-nazev">U_Kyselina 5-hydroxyindoloctová</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">VMK</td><td class="col-nazev">U_Kyselina vanilmandlová</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">NORADREU</td><td class="col-nazev">U_Noradrenalin</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">UCA</td><td class="col-nazev">U_Vápník (Ca)</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">DUCB</td><td class="col-nazev">dU_CB-odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">DUCL</td><td class="col-nazev">dU_Chloridy (Cl) - odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">K[2]</td><td class="col-nazev">dU_Draslík (K) - odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">DUP</td><td class="col-nazev">dU_Fosfor anorg. (P)-odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">DUMG</td><td class="col-nazev">dU_Hořčík (Mg)-odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">KORTU</td><td class="col-nazev">dU_Kortizol - odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">2 týdny</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">HVK</td><td class="col-nazev">dU_Kyselina homovanilová - odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">METU</td><td class="col-nazev">dU_Metanefrin - odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">NORMETU</td><td class="col-nazev">dU_Normetanefrin- odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">DUNA</td><td class="col-nazev">dU_Sodík (Na) - odpad</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Moče</td><td class="col-zkratka">GF-CKD-EPI</td><td class="col-nazev">eGF_CKD-EPI</td><td class="col-kat">Moč sběr (U)  Výpočet odpadu</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">HEPBKVAL</td><td class="col-nazev">Virus hepatitidy B - kvalitativní průkaz</td><td class="col-kat">Hepatitidy</td><td class="col-rt">—</td><td class="col-cold">7dní</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">HEPBKVAN</td><td class="col-nazev">Virus hepatitidy B - kvantita</td><td class="col-kat">Hepatitidy</td><td class="col-rt">—</td><td class="col-cold">7dní</td><td class="col-freeze">—</td><td class="col-note">Virus hepatitidy B (HBV) je malý virus obalený DNA z rodiny Hepadnaviridae a je odpovědný za akutní a chronickou hepatitidu způsobenou HBV. Výsledek v…</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">HEPCKVAN</td><td class="col-nazev">Virus hepatitidy C - kvantita</td><td class="col-kat">Hepatitidy</td><td class="col-rt">—</td><td class="col-cold">7dní</td><td class="col-freeze">—</td><td class="col-note">Virus hepatitidy C je RNA virus z čeledi Flaviviridae a je původcem onemocnění HCV, která se může projevovat chronickým onemocněním jater, cirhózou a …</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">HEPCKVAL</td><td class="col-nazev">Virus hepatitidy C – kvalitativní průkaz</td><td class="col-kat">Hepatitidy</td><td class="col-rt">—</td><td class="col-cold">7dní</td><td class="col-freeze">—</td><td class="col-note">Virus hepatitidy C je RNA virus z čeledi Flaviviridae a je původcem onemocnění HCV, která se může projevovat chronickým onemocněním jater, cirhózou a …</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">CMV</td><td class="col-nazev">Cytomegalovirus (CMV)</td><td class="col-kat">Herpetické viry</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">EBV</td><td class="col-nazev">Epstein-Barr virus (EBV)</td><td class="col-kat">Herpetické viry</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">VZV</td><td class="col-nazev">Varicella-zoster virus (VZV)</td><td class="col-kat">Herpetické viry</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">VZV (Varicella-zoster virus) patří do čeledi Herpesviridae a je původce planých neštovic a pásového oparu. Primární infekce VZV je příčinou planých ne…</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">CLOSDIF</td><td class="col-nazev">Clostridium difficile</td><td class="col-kat">Ostatní</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">BPERT</td><td class="col-nazev">Bordetella pertussis/parapertussis</td><td class="col-kat">Respirační infekce</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note">Bordetella pertussis je původce onemocnění pertuse (černý kašel). Onemocnění způsobují toxigenní kmeny, které produkují tzv. pertusový toxin.Pertuse j…</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">CHRIABRS</td><td class="col-nazev">Multiplex - Chřika A, B, RS virus</td><td class="col-kat">Respirační infekce</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">MYCO</td><td class="col-nazev">Mycoplasma pneumoniae</td><td class="col-kat">Respirační infekce</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">SARS-Cov-2 (Covid-19)</td><td class="col-nazev">SARS-Cov-2 (Covid-19)</td><td class="col-kat">Respirační infekce</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">CTNG</td><td class="col-nazev">Chlamydia trachomatis/Neisseria gonorrhoeae (CT/NG Test)</td><td class="col-kat">Sexuálně přenosné infekce</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note">Moč: Vzhledem k povaze bakterie nutné odebrat první proud ranní moče – pacient by před odběrem neměl 3 hodiny močit. Neisseria gonorrhoeae jsou nepohy…</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">ULCER</td><td class="col-nazev">Genital Ulcer Multiplex DNA</td><td class="col-kat">Sexuálně přenosné infekce</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">PAPILLO</td><td class="col-nazev">Lidské papillomaviry vysokého rizika (HPV HR)</td><td class="col-kat">Sexuálně přenosné infekce</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">STD</td><td class="col-nazev">Multiplex STD panel</td><td class="col-kat">Sexuálně přenosné infekce</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">MGMH</td><td class="col-nazev">Mycoplasma genitalium/Mycoplasma hominis</td><td class="col-kat">Sexuálně přenosné infekce</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">UUUP</td><td class="col-nazev">Ureaplasma urealyticum/ Ureaplasma parvum</td><td class="col-kat">Sexuálně přenosné infekce</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">VYTRESPVIR</td><td class="col-nazev">Výtěr z nosu, výplach z nosu na průkaz antigenů respiračních virů</td><td class="col-kat">Vyšetření dýchacích cest</td><td class="col-rt">—</td><td class="col-cold">8 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">MOCKULT</td><td class="col-nazev">Moč na kultivační vyšetření</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">URICULT</td><td class="col-nazev">Odběr moče do soupravy URICULT</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-rt">—</td><td class="col-cold">—</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">MOCCHLTRACH</td><td class="col-nazev">Odběr moče na průkaz antigenu Chlamydia trachomatis</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-rt">—</td><td class="col-cold">24 hod</td><td class="col-freeze">—</td><td class="col-note">Moč nepatří mezi nejvhodnější materiál k průkazu antigenu Chlamydia trachomatis, protože obsahuje relativně malé množství epiteliálních buněk a hlen p…</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">MOCMYCOPL</td><td class="col-nazev">Odběr moče na průkaz mykoplasmat</td><td class="col-kat">Vyšetření močové soustavy</td><td class="col-rt">—</td><td class="col-cold">48 hod</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">STOLHPYLORI</td><td class="col-nazev">Odběr stolice na průkaz antigenu Helicobacter pylori</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">—</td><td class="col-cold">72 hodin</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">STOLCLDIFF</td><td class="col-nazev">Odběr stolice na průkaz antigenu a toxinu Clostridium difficile</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">—</td><td class="col-cold">24 hodin</td><td class="col-freeze">—</td><td class="col-note">Důležité je doručit vzorek stolice co nejrychleji do laboratoře, nejlépe do 2 hodin. Vzorky lze zpracovat do 24 hodin od odběru, ale je nutné následně…</td></tr>
+<tr><td class="col-oddeleni">PCR</td><td class="col-zkratka">STOLADENOROTANORO</td><td class="col-nazev">Odběr stolice pro průkaz antigenů Adenovirů, Rotavirů a Norovirů</td><td class="col-kat">Vyšetření trávící soustavy</td><td class="col-rt">—</td><td class="col-cold">7 dní</td><td class="col-freeze">—</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">BARTG</td><td class="col-nazev">Bartonella henselae IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">BARTM</td><td class="col-nazev">Bartonella henselae IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">BPA</td><td class="col-nazev">Bordetela pertussis toxin IgA</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">BPG</td><td class="col-nazev">Bordetela pertussis toxin IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">BG</td><td class="col-nazev">Borrelia IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">BM</td><td class="col-nazev">Borrelia IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">BRUG</td><td class="col-nazev">Brucella abortus IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">BRUM</td><td class="col-nazev">Brucella abortus IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">CMG</td><td class="col-nazev">CMV IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">CMVA</td><td class="col-nazev">CMV IgG avidita</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">CMM</td><td class="col-nazev">CMV IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">CHPNA</td><td class="col-nazev">Chlamydia (Chlamydophila) pneumoniae IgA</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">CHPNG</td><td class="col-nazev">Chlamydia (Chlamydophila) pneumoniae IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">CHPNM</td><td class="col-nazev">Chlamydia (Chlamydophila) pneumoniae IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">CHLTA</td><td class="col-nazev">Chlamydia trachomatis IgA</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">CHLTG</td><td class="col-nazev">Chlamydia trachomatis IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">DIPG</td><td class="col-nazev">Diphteria IgG (záškrt)</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">EAG</td><td class="col-nazev">EBV- EA IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">EBNA-G</td><td class="col-nazev">EBV-EBNA IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">VCAG</td><td class="col-nazev">EBV-VCA IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">VCAM</td><td class="col-nazev">EBV-VCA IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">FRAT</td><td class="col-nazev">Francisella tularensis IgM+IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HHV6G</td><td class="col-nazev">HHV-6 IgG (Lidský herpesvirus 6)</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HIV</td><td class="col-nazev">HIV Ag/Ab Combo</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">14 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note">V případě reaktivního výsledku je vzorek zaslán ke konfirmaci do Národní referenční laboratoře pro HIV / AIDS (Státní zdravotní ústav Praha).</td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HSVG</td><td class="col-nazev">HSV 1,2 IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HSVM</td><td class="col-nazev">HSV 1,2 IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HEPYG</td><td class="col-nazev">Helicobacter pylori IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">3 dny</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">KEG</td><td class="col-nazev">Klíšťová encefalitida IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">KEM</td><td class="col-nazev">Klíšťová encefalitida IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">MPG</td><td class="col-nazev">Mycoplasma pneumoniae IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">8 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">MPM</td><td class="col-nazev">Mycoplasma pneumoniae IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">8 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">PARG</td><td class="col-nazev">Parotitis IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">8 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">PARM</td><td class="col-nazev">Parotitis IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">8 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">PARVOG</td><td class="col-nazev">Parvovirus B-19 IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">PARVOM</td><td class="col-nazev">Parvovirus B-19 IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">RPR</td><td class="col-nazev">RPR Syphilis</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">SPAG</td><td class="col-nazev">Spalničky IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">SPAM</td><td class="col-nazev">Spalničky IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">TETG</td><td class="col-nazev">Tetanus IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">TOXGA</td><td class="col-nazev">Toxoplasma IgG avidita</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">TOXG</td><td class="col-nazev">Toxoplazma IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">TOXM</td><td class="col-nazev">Toxoplazma IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">WBBG</td><td class="col-nazev">Western blot Borrelia IgG</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">WBBM</td><td class="col-nazev">Western blot Borrelia IgM</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">ZARG</td><td class="col-nazev">Zarděnky IgG (Rubella, Rubeola)</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">ZARM</td><td class="col-nazev">Zarděnky IgM (Rubella, Rubeola)</td><td class="col-kat">Ostatní sérologická vyšetření</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">ANTIHAVG</td><td class="col-nazev">Anti-HAV IgG</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">14 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HAVM</td><td class="col-nazev">Anti-HAV IgM</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">AHBC</td><td class="col-nazev">Anti-HBc</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">14 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">AHBM</td><td class="col-nazev">Anti-HBc IgM</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">7 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">AHBE</td><td class="col-nazev">Anti-HBe</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">7 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">AHBS</td><td class="col-nazev">Anti-HBs</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">14 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HCVE</td><td class="col-nazev">Anti-HCV</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">7 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HEVG</td><td class="col-nazev">Anti-HEV IgG</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HEVM</td><td class="col-nazev">Anti-HEV IgM</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HB.E</td><td class="col-nazev">HBeAg</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">1 týden</td><td class="col-freeze">dlouhodobě</td><td class="col-note"></td></tr>
+<tr><td class="col-oddeleni">Sérologie</td><td class="col-zkratka">HB.S</td><td class="col-nazev">HBsAg</td><td class="col-kat">Sérologie hepatitidy</td><td class="col-rt">—</td><td class="col-cold">6 dní</td><td class="col-freeze">dlouhodobě</td><td class="col-note">Pokud není možné vyšetření provést do 6 dnů, je nutné oddělení séra od krevních elementů. V případě reaktivního výsledku je pozitivita HBsAg potvrzena…</td></tr>
+    </tbody>
+  </table>
+</div>
+
+
+<footer>
+  <strong>Zdroj:</strong> Laboratorní příručka BHSI/OpenLims &nbsp;|&nbsp;
+  <strong>Oddělení:</strong> Biochemie (1/2026), Sérologie (1/2026), Hematologie (10/2025), Bakteriologie (5/2024), PCR (7/2023), Moče (11/2021) &nbsp;|&nbsp;
+  Při nejasnostech kontaktujte laboratoř.
+  <br><br>
+  <em>Stabilita je uvedena pro správně odebraný a transportovaný vzorek. Teploty RT = 15–25 °C, Chlad = 2–8 °C, Mraz = −20 °C.</em>
+</footer>
+
+</body>
+</html>

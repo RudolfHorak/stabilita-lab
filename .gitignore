@@ -1,0 +1,20 @@
+# Zdrojové Excel soubory (velké binárky, sdíleny mimo repo)
+STABILITA_tabulky/
+
+# Generované exporty (lze přegenerovat spuštěním skriptů)
+STABILITA_data/*.db
+STABILITA_data/*.csv
+STABILITA_data/*.json
+
+# Python cache
+__pycache__/
+*.pyc
+*.pyo
+.venv/
+venv/
+
+# Dočasné soubory
+temp_out.txt
+
+# Nástroje
+.claude/
