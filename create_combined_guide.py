@@ -219,11 +219,11 @@ def build_stab_sections(grouped: dict) -> tuple[str, str]:
         sections += f"""
 <div id="grp-stab-{g['id']}" class="grp-section" style="border-color:{g['color_border']}">
   <div class="grp-header" style="background:{g['color_header']}">
-    <button class="grp-back" onclick="window.scrollTo({{top:0,behavior:'smooth'}})" title="Zpět na začátek">↑ Zpět</button>
     <div class="grp-header-text">
       <h2>{g['icon']} {g['label']} <span style="font-weight:400;opacity:.8;font-size:12px">({len(tests)} vyšetření)</span></h2>
       <div class="grp-sub">{g['subtitle']}</div>
     </div>
+    <button class="grp-back" onclick="window.scrollTo({{top:0,behavior:'smooth'}})" title="Zpět na začátek">↑ Zpět</button>
   </div>
   <table>{COL_WIDTHS_STAB}
     <thead><tr>
@@ -344,11 +344,11 @@ def build_mat_sections(grouped: dict) -> tuple[str, str]:
         sections += f"""
 <div id="grp-mat-{g['id']}" class="grp-section" style="border-color:{g['color_border']}">
   <div class="grp-header" style="background:{g['color_header']}">
-    <button class="grp-back" onclick="window.scrollTo({{top:0,behavior:'smooth'}})" title="Zpět na začátek">↑ Zpět</button>
     <div class="grp-header-text">
       <h2>{g['icon']} {g['label']} <span style="font-weight:400;opacity:.8;font-size:12px">({len(tests)} vyšetření)</span></h2>
       <div class="grp-sub">{g['subtitle']}</div>
     </div>
+    <button class="grp-back" onclick="window.scrollTo({{top:0,behavior:'smooth'}})" title="Zpět na začátek">↑ Zpět</button>
   </div>
   <table>{COL_WIDTHS_MAT}
     <thead><tr>
