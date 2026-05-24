@@ -7,31 +7,119 @@ do databáze a vygenerování přehledu stability vzorků pro lékaře a sestry.
 
 ---
 
-## Co bylo dosud zpracováno
+## Aktuální stav — vše dokončeno
 
-- **Biochemie** — 179 testů, 19 listů → `STABILITA_data/biochemie.csv`, `biochemie.json`, `lab_catalog.db`
-- **Hematologie** — 53 testů → `STABILITA_data/hematologie.csv`
-- **Moče** — 59 testů → `STABILITA_data/moce.csv`
-- **Sérologie** — 60 testů → `STABILITA_data/serologie.csv`
-- **Bakteriologie** — 36 testů → `STABILITA_data/bakteriologie.csv`
-- **PCR** — 34 testů → `STABILITA_data/pcr.csv`
-- **Celkem** — 421 testů v `lab_catalog.db` (tabulka `testy`)
-- **Stability guide** — `STABILITA_data/stabilita_prehled.html` (přehled pro lékaře a sestry, 9 skupin, zarovnané sloupce)
+| Oddělení | Testů | CSV |
+|---|---|---|
+| Biochemie | 179 | `STABILITA_data/biochemie.csv` |
+| Hematologie | 53 | `STABILITA_data/hematologie.csv` |
+| Moče | 59 | `STABILITA_data/moce.csv` |
+| Sérologie | 60 | `STABILITA_data/serologie.csv` |
+| Bakteriologie | 36 | `STABILITA_data/bakteriologie.csv` |
+| PCR | 34 | `STABILITA_data/pcr.csv` |
+| **Celkem** | **421** | `STABILITA_data/lab_catalog.db` |
+
+**Výstupní HTML přehled:** `STABILITA_data/prehled.html` (generuje `create_combined_guide.py`)
+
+**GitHub:** https://github.com/RudolfHorak/stabilita-lab (veřejné repo)
+
+**Vercel:** nasadit přes `vercel --prod --yes` (po `vercel login`); kořenová URL servuje `prehled.html`
 
 ---
 
-## Aktuální stav — dokončeno
+## Skripty
 
-Všechna oddělení zpracována. Databáze i HTML přehled jsou kompletní.
+| Skript | Účel |
+|---|---|
+| `normalize_all.py` | Excel → SQLite + CSV (všechna oddělení) |
+| `create_combined_guide.py` | SQLite → `prehled.html` (kombinovaný přehled) |
+| `normalize_biochemie.py` | Původní pilot Biochemie — superseded |
+| `create_stability_guide.py` | Původní stability-only guide — superseded |
+| `create_material_guide.py` | Původní material-only guide — superseded |
+
+**Hlavní workflow:**
+```
+python normalize_all.py          # přegeneruje DB + CSV
+python create_combined_guide.py  # přegeneruje prehled.html
+vercel --prod --yes               # nasadí na Vercel
+```
+
+---
+
+## HTML přehled — `prehled.html`
+
+### Tři pohledy na jedné stránce
+
+Přepínání záložkami nad obsahem:
+
+1. **⏱ Stabilita vzorků** — 9 skupin dle RT doby stability
+2. **🧪 Odběrový materiál** — 10 skupin dle typu zkumavky / výtěrovky
+3. **🔍 Vyhledávání** — aktivuje se automaticky psaním do pole
+
+### Vyhledávání
+
+- Pole nad záložkami, vždy viditelné
+- Hledá v `zkratka` i `nazev`, od 2 znaků, debounce 180 ms
+- Řazení výsledků: přesná shoda → začíná dotazem → obsahuje
+- Klik na výsledek → **detail vyšetření** (zkratka, název, odděl., odběrový materiál + barevné odznaky, RT/Chlad/Mraz, pokyny k odběru)
+- `← Zpět` vrátí na seznam výsledků; `✕` nebo `Esc` vrátí na záložky
+- Data 421 testů embedována jako JSON v HTML — vyhledávání bez serveru
+
+### Skupiny stability (9 skupin)
+
+| # | Skupina | Podmínka |
+|---|---|---|
+| 1 | IHNED | `rt_hours == -1` |
+| 2 | Do 2 hodin | `rt_hours ≤ 2` |
+| 3 | Do 4 hodin | `rt_hours ≤ 4` |
+| 4 | Do 6 hodin | `rt_hours ≤ 6` |
+| 5 | Do 8 hodin | `rt_hours ≤ 8` |
+| 6 | Do 24 hodin | `rt_hours ≤ 24` |
+| 7 | 2–3 dny | `rt_hours ≤ 72` |
+| 8 | 4 dny a více | `rt_hours > 72` |
+| 9 | Pouze chlazené / zvláštní podmínky | `rt_hours is None` |
+
+Sloupce: Oddělení | Zkratka | Název | Kategorie | RT (15–25 °C) | Chlad (2–8 °C) | Mraz (−20 °C) | Preanalytická poznámka
+
+### Skupiny materiálu (10 skupin)
+
+| # | Skupina | Barva uzávěru |
+|---|---|---|
+| 1 | SST / Gelová zkumavka — sérum | zlatý / oranžový |
+| 2 | EDTA zkumavka — plná krev | fialový |
+| 3 | Citračná zkumavka — koagulace | modrý |
+| 4 | Heparinová zkumavka — plazma | zelený |
+| 5 | Fluoridová zkumavka — glykémie / laktát | šedý |
+| 6 | Moč — zkumavka / sterilní nádobka | — |
+| 7 | Mikrobiologická výtěrovka / tampón | — |
+| 8 | PCR výtěrovka / odběrová sada | — |
+| 9 | Sterilní zkumavka / kontejner — kultivace | — |
+| 10 | Jiný / kombinovaný odběr | — |
+
+Testy s kombinovaným odběrem se zobrazují ve více skupinách (421 testů → 484 řádků).
+
+Sloupce: Oddělení | Zkratka | Název | Kategorie | Odběrový materiál | Stabilita RT | Pokyny k odběru
+
+### UI funkce přehledu
+
+- **Legenda klikatelná** — klik na položku legendy posune stránku smooth na danou skupinu
+- **Tlačítko ↑ Zpět** — v pravé části hlavičky každé skupiny, scrolluje smooth na začátek stránky
+- **Rozbalitelné buňky** — text zkrácený na 120/140/150 znaků má šipku ▾ a kurzor pointer; klik rozbalí celý text (▴), druhý klik sbalí; platí pro Odběrový materiál, Pokyny k odběru, Preanalytická poznámka
+- **Tisk** (`Ctrl+P`) — vyhledávání se skryje, oba přehledy se vytisknou za sebou
+
+### Zarovnání sloupců
+
+`table-layout: fixed` + `<colgroup>` se stejnými procenty v každé tabulce.
+
+Stabilita: `8% | 7% | 22% | 11% | 8% | 9% | 9% | 26%`
+
+Materiál: `7% | 7% | 22% | 11% | 26% | 8% | 19%`
 
 ---
 
 ## Typy struktur v Excel souborech
 
-Soubory se dělí do dvou strukturálních typů:
-
 ### Typ A — BHSI (Biochemie, Hematologie, Moče, Sérologie)
-Stejná sada atributů ve všech listech:
 
 | Řádkový label | Pole v DB |
 |---|---|
@@ -52,12 +140,10 @@ Stejná sada atributů ve všech listech:
 | BHSI \| Poznámka: | `poznamka` |
 | ALL \| Výkon: | `vzp_vykon` |
 | Prováděno v: | `provadeno_v` |
-| Kontrola - zadáno: | `kontrola_zadano` |
-| Kontrola - VLEK: | `kontrola_vlek` |
-| Kontrola - VA: | `kontrola_va` |
-| Kontrola - SMK: | `kontrola_smk` |
+| Kontrola - zadáno/VLEK/VA/SMK | kontrolní pole |
 
-### Typ B — Mik (Bakteriologie — všechny listy)
+### Typ B — Mik (Bakteriologie)
+
 | Řádkový label | Pole v DB |
 |---|---|
 | Zkratka | `zkratka` |
@@ -69,88 +155,19 @@ Stejná sada atributů ve všech listech:
 | Mik PCR \| Transport: | `material` |
 | Mik PCR \| Poznámka: | `poznamka` |
 | Mik PCR \| Doba odezvy: | `doba_odezvy` |
-| Prováděno v: | `provadeno_v` |
 | Typ odběrového materiálu | `primarni_material` |
-| Kontrola - zadáno/VLEK/VA/SMK | kontrolní pole |
 
 Chybějící pole (NULL): `openlims_id`, `princip_stanoveni`, `jednotka`, `frekvence`, `vzp_vykon`, `interpretace`.
 
 ### Typ C — PCR (rozšířený Mik)
-Listy: "Hepatitidy", "Herpetické viry", "Respirační infekce", "Sexuálně přenosné infekce", "Ostatní"
-navíc oproti Typ B:
+
+Navíc oproti Typ B:
 
 | Řádkový label | Pole v DB |
 |---|---|
 | PCR \| Abstrakt: | `interpretace` |
 | PCR \| Typ vyšetřovaného materiálu: | `primarni_material` |
 | PCR \| Zkumavka / odběrovka: | `typ_materialu` |
-| PCR \| Množství vzorku pro vyšetření: | (přidá se do `poznamka`) |
-
-Listy "Vyšetření dýchacích cest", "Vyšetření trávící soustavy", "Vyšetření močové soustavy" mají Typ B strukturu.
-
----
-
-## Postup implementace
-
-### Krok 1: Vytvořit `normalize_all.py`
-
-Nový unifikovaný skript nahrazující `normalize_biochemie.py`. Procesuje všechny soubory najednou.
-
-**Logika:**
-1. `DROP TABLE IF EXISTS testy; CREATE TABLE testy (...)` — vždy začít čistě
-2. Pro každý soubor ze seznamu `FILE_LIST`:
-   - Načíst Excel přes `openpyxl` (data_only=True)
-   - Pro každý list (pokud není v `EXCLUDE_SHEETS`):
-     - Dynamicky najít řádek a sloupec s "Zkratka"
-     - Automaticky detekovat typ (Typ A/B/C): přítomnost labelu `"BHSI | Stabilita:"` → Typ A; jinak Typ B/C
-     - Sestavit `label_to_row` slovník
-     - Pro každý datový sloupec vytvořit záznam testu
-     - Přidat `oddeleni` a `kategorie`
-3. Uložit do `lab_catalog.db`
-4. Uložit CSV per oddělení
-
-**FILE_LIST:**
-```python
-FILE_LIST = [
-    ("STABILITA_tabulky/Export_...Biochemie_15012026.xlsx", "Biochemie", []),
-    ("STABILITA_tabulky/Export_...Hematologie_15102025.xlsx", "Hematologie", []),
-    ("STABILITA_tabulky/Export_...Moce_19112021.xlsx", "Moče", []),
-    ("STABILITA_tabulky/Export_...Serologie_30012026.xlsx", "Sérologie", []),
-    ("STABILITA_tabulky/Export_...Bakteriologie_09052024.xlsx", "Bakteriologie",
-        ["Odběrový materiál - zkratky"]),  # ← VYLOUČIT tento list!
-    ("STABILITA_tabulky/Export_...PCR_31072023.xlsx", "PCR", []),
-]
-```
-
-### Krok 2: Aktualizovat `create_stability_guide.py`
-
-Provedené změny:
-1. Přidat `18\s*[-–]\s*25` do `_RT_TEMP` regexu (Bakteriologie/PCR používají 18-25°C)
-2. Přidat sloupec `Oddělení` do HTML tabulek (při ~420 testech z 6 lab. je nutné rozlišit)
-3. Rozšíření skupin ze 7 na 9 — jemnější dělení dle RT doby
-4. Zarovnání sloupců přes všechny skupiny (`table-layout: fixed` + `<colgroup>`)
-
-### Skupiny stability (9 skupin)
-
-| # | Skupina | Podmínka |
-|---|---|---|
-| 1 | IHNED | `rt_hours == -1` |
-| 2 | Do 2 hodin | `rt_hours ≤ 2` |
-| 3 | Do 4 hodin | `rt_hours ≤ 4` |
-| 4 | Do 6 hodin | `rt_hours ≤ 6` |
-| 5 | Do 8 hodin | `rt_hours ≤ 8` |
-| 6 | Do 24 hodin | `rt_hours ≤ 24` |
-| 7 | 2–3 dny | `rt_hours ≤ 72` |
-| 8 | 4 dny a více | `rt_hours > 72` |
-| 9 | Pouze chlazené / zvláštní podmínky | `rt_hours is None` |
-
-### Zarovnání sloupců
-
-Konstantní `<colgroup>` s pevnými procenty (celkem 100 %) vložen do každé `<table>`:
-```
-Oddělení 8% | Zkratka 7% | Název 22% | Kategorie 11% | RT 8% | Chlad 9% | Mraz 9% | Poznámka 26%
-```
-CSS: `table { table-layout: fixed; width: 100%; }`
 
 ---
 
@@ -158,65 +175,55 @@ CSS: `table { table-layout: fixed; width: 100%; }`
 
 ### ⚠️ 1. List "Odběrový materiál - zkratky" (Bakteriologie) — VYLOUČIT
 Tento list má **obrácenou strukturu** — hodnoty v řádku `Zkratka` jsou zkratky odběrových
-materiálů (SPVBM, SPVSM, SPZ…), ne kódy testů. Dynamická detekce ho sice najde,
-ale výsledek by byl nesmyslný. **Musí být explicitně vyloučen podle jména.**
+materiálů (SPVBM, SPVSM, SPZ…), ne kódy testů. **Musí být explicitně vyloučen podle jména.**
 
 ### ⚠️ 2. Duplikáty při opakovaném spuštění
-`normalize_all.py` procesuje i Biochemii (aby byla DB vždy kompletní). Při opakovaném
-spuštění bez `DROP TABLE` by vznikly duplicitní záznamy. **Vždy DROP TABLE na začátku.**
+`normalize_all.py` vždy začíná `DROP TABLE IF EXISTS testy`. Bez toho vznikají duplikáty.
 
-### ⚠️ 3. Rozdělování stability textu na čárku (oprava z Biochemie)
-Funkce `_split_stability` musí rozdělit na `[;,\n]` — ne jen `;`.
-Texty jako `"24 hodin při 15-25 °C, 1 týden při 2-8 °C, dlouhodobě při -20 °C"` jsou
-čárkami oddělené. Bez tohoto se chlad/mraz zobrazují špatně (= RT hodnota). **Oprava
-již provedena, při refaktoringu zachovat.**
+### ⚠️ 3. Rozdělování stability textu na čárku
+Funkce `_split()` musí rozdělit na `[;,\n]` — ne jen `;`. Texty jako
+`"24 hodin při 15-25 °C, 1 týden při 2-8 °C, dlouhodobě při -20 °C"` jsou čárkami oddělené.
 
 ### ⚠️ 4. Hodnota "dlouhodobě" u mrazu
-Texty `"dlouhodobě při -20 °C"` nemají číslo → regex `(\d+)...` je nenajde → sloupec
-Mraz je prázdný. **Explicitní detekce klíčového slova "dlouhodobě" musí zůstat.**
+Texty `"dlouhodobě při -20 °C"` nemají číslo → explicitní detekce klíčového slova musí zůstat v `extract_freeze_str`.
 
 ### ⚠️ 5. Teplota 18–25 °C v Bakteriologii/PCR
-Biochemie/Hematologie/Sérologie používají `15-25°C`. Bakteriologie/PCR používají
-`18-25°C` jako pokojovou teplotu. Stávající regex by je zařadil do skupiny 7 (chlazené).
-**Nutno přidat `18\s*[-–]\s*25` do `_RT_TEMP` regexu.**
+Biochemie/Hematologie/Sérologie používají `15-25°C`. Bakteriologie/PCR používají `18-25°C`.
+Regex `_RT_TEMP` musí obsahovat obě varianty, jinak by 18-25°C testy skončily ve skupině "Chlazené".
 
 ### ⚠️ 6. "Název" vs "Metoda" label
-Biochemie/Hematologie/Moče/Sérologie používají `"Metoda"` pro název testu.
-Bakteriologie/PCR používají `"Název"`. **Obě varianty musí být v label mapách.**
+BHSI používá `"Metoda"` pro název testu, Bakteriologie/PCR používají `"Název"`. Obě varianty musí být v mapách.
 
 ### ⚠️ 7. Různé pozice řádku Zkratka
-- Biochemie (většina listů): Zkratka na R1 (col1) nebo R3 (col1)
-- Biochemie (list "Moč"): Zkratka na R3 (col0)
-- Všechny ostatní: Zkratka na R3 (col1), výjimka R4 (PCR "Vyšetření močové soustavy")
-→ **Dynamická detekce je správná, nepoužívat hardcoded indexy.**
+Pozice se liší list od listu → dynamická detekce je správná, hardcoded indexy nefungují.
 
 ---
 
-## Výstupy po dokončení
+## Výstupy
 
 ```
 STABILITA_data/
-├── lab_catalog.db          ← SQLite, tabulka testy, ~420 záznamů
-├── biochemie.csv           ← 179 testů
-├── hematologie.csv         ← ~53 testů
-├── moce.csv                ← ~59 testů
-├── serologie.csv           ← ~60 testů
-├── bakteriologie.csv       ← ~36 testů
-├── pcr.csv                 ← ~34 testů
-└── stabilita_prehled.html  ← přegenerovaný, se sloupcem Oddělení
+├── lab_catalog.db       ← SQLite, tabulka testy, 421 záznamů
+├── biochemie.csv        ← 179 testů
+├── hematologie.csv      ← 53 testů
+├── moce.csv             ← 59 testů
+├── serologie.csv        ← 60 testů
+├── bakteriologie.csv    ← 36 testů
+├── pcr.csv              ← 34 testů
+└── prehled.html         ← kombinovaný přehled (stabilita + materiál + vyhledávání)
 ```
 
 ---
 
-## Ověření po dokončení
+## Ověření
 
 ```sql
 SELECT oddeleni, COUNT(*) as n FROM testy GROUP BY oddeleni ORDER BY n DESC;
--- Očekáváno: Biochemie=179, Sérologie~60, Moče~59, Hematologie~53, Bakteriologie~36, PCR~34
+-- Biochemie=179, Sérologie=60, Moče=59, Hematologie=53, Bakteriologie=36, PCR=34
 
 SELECT COUNT(*) FROM testy;
--- Očekáváno: ~420
+-- 421
 
 SELECT * FROM testy WHERE oddeleni='Bakteriologie' AND kategorie='Odběrový materiál - zkratky';
--- Očekáváno: 0 řádků (list byl vyloučen)
+-- 0 řádků (list byl vyloučen)
 ```
