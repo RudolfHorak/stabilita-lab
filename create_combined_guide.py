@@ -5,6 +5,7 @@ Kombinovaný přehled laboratorních vyšetření — jedna HTML stránka, tři 
   • Vyhledávání        (live search dle zkratky nebo názvu → detail vyšetření)
 """
 
+import html as _html
 import json
 import re
 import sqlite3
@@ -113,7 +114,7 @@ def preanalytic_note(poznamka: str | None) -> str:
     if PREANALYTIC_RE.search(poznamka):
         note = re.sub(r"[↑↓→←]", "", poznamka).strip()
         if note in ("---", "----", ""): return ""
-        return note[:150] + ("…" if len(note) > 150 else "")
+        return note
     return ""
 
 
@@ -121,6 +122,23 @@ def shorten(text: str | None, maxlen: int = 150) -> str:
     if not text: return ""
     s = re.sub(r"\s+", " ", text).strip()
     return s[:maxlen] + ("…" if len(s) > maxlen else "")
+
+
+def td_expandable(text: str | None, maxlen: int, css_class: str) -> str:
+    """Buňka s kliknutím pro rozbalení celého textu, pokud byl zkrácen."""
+    if not text:
+        return f'<td class="{css_class}">—</td>'
+    s = re.sub(r"\s+", " ", text).strip()
+    esc_full = _html.escape(s, quote=True)
+    if len(s) <= maxlen:
+        return f'<td class="{css_class}">{_html.escape(s)}</td>'
+    short = _html.escape(s[:maxlen])
+    return (
+        f'<td class="{css_class} expandable" '
+        f'data-full="{esc_full}" data-short="{short}…" '
+        f'title="Klikněte pro zobrazení celého textu">'
+        f'{short}…</td>'
+    )
 
 
 # ===========================================================================
@@ -196,7 +214,7 @@ def html_table_stab(tests: list[dict], group_id: int) -> str:
             f'<td class="col-rt">{rt_cell}</td>'
             f'<td class="col-cold">{cold or "—"}</td>'
             f'<td class="col-freeze">{freeze or "—"}</td>'
-            f'<td class="col-note">{note}</td>'
+            + td_expandable(note, 150, "col-note") +
             f"</tr>"
         )
     return "\n".join(rows)
@@ -314,15 +332,15 @@ def html_table_mat(tests: list[dict]) -> str:
     rows = []
     for t in tests:
         rows.append(
-            f"<tr>"
+            "<tr>"
             f'<td class="col-odd">{t["oddeleni"] or ""}</td>'
             f'<td class="col-zkr">{t["zkratka"] or ""}</td>'
             f'<td class="col-naz">{t["nazev"] or ""}</td>'
             f'<td class="col-kat">{t["kategorie"] or ""}</td>'
-            f'<td class="col-detail">{shorten(t["typ_materialu"], 120) or "—"}</td>'
-            f'<td class="col-rt">{t["rt_brief"]}</td>'
-            f'<td class="col-note">{shorten(t["klinicke_informace"], 140)}</td>'
-            f"</tr>"
+            + td_expandable(t["typ_materialu"], 120, "col-detail")
+            + f'<td class="col-rt">{t["rt_brief"]}</td>'
+            + td_expandable(t["klinicke_informace"], 140, "col-note")
+            + "</tr>"
         )
     return "\n".join(rows)
 
@@ -474,6 +492,11 @@ tr:hover td { background: rgba(0,0,0,.02); }
 .col-cold   { color: #1a5276; }
 .col-freeze { color: #4a235a; }
 .col-note { color: #7f4f00; font-size: 10px; font-style: italic; }
+td.expandable { cursor: pointer; }
+td.expandable:hover { background: #f0f7ff !important; }
+td.expandable:not(.expanded)::after { content: " ▾"; color: #1a3a5c; font-size: 9px; opacity: .7; }
+td.expandable.expanded { white-space: normal !important; word-wrap: break-word; }
+td.expandable.expanded::after { content: " ▴"; color: #1a3a5c; font-size: 9px; opacity: .7; }
 .badge-urgent { background: #c0392b; color: white; padding: 1px 5px; border-radius: 3px; font-size: 10px; }
 
 /* === VÝSLEDKY HLEDÁNÍ === */
@@ -718,6 +741,18 @@ function backToResults() {
   viewDetail.style.display = 'none';
   viewSearch.style.display = 'block';
 }
+
+document.addEventListener('click', function(e) {
+  const td = e.target.closest('td.expandable');
+  if (!td) return;
+  if (td.classList.contains('expanded')) {
+    td.textContent = td.dataset.short;
+    td.classList.remove('expanded');
+  } else {
+    td.textContent = td.dataset.full;
+    td.classList.add('expanded');
+  }
+});
 
 function scrollToGroup(id) {
   const el = document.getElementById(id);
