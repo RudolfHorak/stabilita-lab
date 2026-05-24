@@ -47,10 +47,17 @@ body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #1a1a
 
 /* Skupiny */
 .grp-section { margin-bottom: 24px; border-radius: 6px; overflow: hidden; border: 2px solid; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
-.grp-header { padding: 10px 16px; color: white; }
+.grp-header { padding: 10px 16px; color: white; display: flex; align-items: flex-start; gap: 10px; }
+.grp-header-text { flex: 1; }
 .grp-header h2 { font-size: 14px; font-weight: 700; }
 .grp-header .grp-sub { font-size: 11px; opacity: .9; margin-top: 2px; }
-.grp-count { float: right; font-size: 11px; opacity: .85; font-weight: 400; }
+.grp-back {
+    flex-shrink: 0; background: rgba(255,255,255,.18); color: white;
+    border: 1px solid rgba(255,255,255,.4); border-radius: 4px;
+    padding: 3px 9px; font-size: 11px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; line-height: 1.6;
+}
+.grp-back:hover { background: rgba(255,255,255,.32); }
 
 /* Tabulky */
 table { width: 100%; table-layout: fixed; border-collapse: collapse; background: white; }
@@ -162,8 +169,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
   
 <div id="grp-stab-1" class="grp-section" style="border-color:#c0392b">
   <div class="grp-header" style="background:#c0392b">
-    <h2>⚠️ IHNED — zpracovat okamžitě <span class="grp-count">10 vyšetření</span></h2>
-    <div class="grp-sub">Labilní analyty — okamžité zpracování nebo zmrazení bezprostředně po odběru</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>⚠️ IHNED — zpracovat okamžitě <span style="font-weight:400;opacity:.8;font-size:12px">(10 vyšetření)</span></h2>
+      <div class="grp-sub">Labilní analyty — okamžité zpracování nebo zmrazení bezprostředně po odběru</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -185,8 +195,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-stab-2" class="grp-section" style="border-color:#e74c3c">
   <div class="grp-header" style="background:#e74c3c">
-    <h2>🔴 Do 2 hodin při pokojové teplotě <span class="grp-count">26 vyšetření</span></h2>
-    <div class="grp-sub">Vzorky musí být doručeny do 2 hodin od odběru</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🔴 Do 2 hodin při pokojové teplotě <span style="font-weight:400;opacity:.8;font-size:12px">(26 vyšetření)</span></h2>
+      <div class="grp-sub">Vzorky musí být doručeny do 2 hodin od odběru</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -224,8 +237,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-stab-3" class="grp-section" style="border-color:#d35400">
   <div class="grp-header" style="background:#d35400">
-    <h2>🟠 Do 4 hodin při pokojové teplotě <span class="grp-count">11 vyšetření</span></h2>
-    <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 4 hodin</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🟠 Do 4 hodin při pokojové teplotě <span style="font-weight:400;opacity:.8;font-size:12px">(11 vyšetření)</span></h2>
+      <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 4 hodin</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -248,8 +264,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-stab-4" class="grp-section" style="border-color:#e67e22">
   <div class="grp-header" style="background:#e67e22">
-    <h2>🔶 Do 6 hodin při pokojové teplotě <span class="grp-count">53 vyšetření</span></h2>
-    <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 6 hodin</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🔶 Do 6 hodin při pokojové teplotě <span style="font-weight:400;opacity:.8;font-size:12px">(53 vyšetření)</span></h2>
+      <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 6 hodin</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -314,8 +333,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-stab-5" class="grp-section" style="border-color:#b7950b">
   <div class="grp-header" style="background:#b7950b">
-    <h2>🟡 Do 8 hodin při pokojové teplotě <span class="grp-count">12 vyšetření</span></h2>
-    <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 8 hodin</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🟡 Do 8 hodin při pokojové teplotě <span style="font-weight:400;opacity:.8;font-size:12px">(12 vyšetření)</span></h2>
+      <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 8 hodin</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -339,8 +361,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-stab-6" class="grp-section" style="border-color:#aed6f1">
   <div class="grp-header" style="background:#2980b9">
-    <h2>🔵 Do 24 hodin při pokojové teplotě <span class="grp-count">90 vyšetření</span></h2>
-    <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 24 hodin</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🔵 Do 24 hodin při pokojové teplotě <span style="font-weight:400;opacity:.8;font-size:12px">(90 vyšetření)</span></h2>
+      <div class="grp-sub">Vzorky stabilní při pokojové teplotě do 24 hodin</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -442,8 +467,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-stab-7" class="grp-section" style="border-color:#82e0aa">
   <div class="grp-header" style="background:#1e8449">
-    <h2>🟢 2–3 dny při pokojové teplotě <span class="grp-count">21 vyšetření</span></h2>
-    <div class="grp-sub">Vzorky stabilní při pokojové teplotě 2–3 dny</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🟢 2–3 dny při pokojové teplotě <span style="font-weight:400;opacity:.8;font-size:12px">(21 vyšetření)</span></h2>
+      <div class="grp-sub">Vzorky stabilní při pokojové teplotě 2–3 dny</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -476,8 +504,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-stab-8" class="grp-section" style="border-color:#27ae60">
   <div class="grp-header" style="background:#1a5e36">
-    <h2>✅ 4 dny a více při pokojové teplotě <span class="grp-count">16 vyšetření</span></h2>
-    <div class="grp-sub">Vzorky stabilní při pokojové teplotě 4 dny a déle</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>✅ 4 dny a více při pokojové teplotě <span style="font-weight:400;opacity:.8;font-size:12px">(16 vyšetření)</span></h2>
+      <div class="grp-sub">Vzorky stabilní při pokojové teplotě 4 dny a déle</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -505,8 +536,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-stab-9" class="grp-section" style="border-color:#5dade2">
   <div class="grp-header" style="background:#1a5276">
-    <h2>❄️ Pouze chlazené (+2 až +8 °C) / zvláštní podmínky <span class="grp-count">182 vyšetření</span></h2>
-    <div class="grp-sub">Bez definované RT stability — uchovávat výhradně v chladu nebo dle speciálních pokynů</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>❄️ Pouze chlazené (+2 až +8 °C) / zvláštní podmínky <span style="font-weight:400;opacity:.8;font-size:12px">(182 vyšetření)</span></h2>
+      <div class="grp-sub">Bez definované RT stability — uchovávat výhradně v chladu nebo dle speciálních pokynů</div>
+    </div>
   </div>
   <table><colgroup><col style="width:8%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:8%"><col style="width:9%"><col style="width:9%"><col style="width:26%"></colgroup>
     <thead><tr>
@@ -705,8 +739,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
   
 <div id="grp-mat-1" class="grp-section" style="border-color:#f9a825">
   <div class="grp-header" style="background:#e65100">
-    <h2>🟡 SST / Gelová zkumavka — sérum <span class="grp-count">182 vyšetření</span></h2>
-    <div class="grp-sub">Srážlivá krev s gelem a aktivátorem srážení — zlatý nebo oranžový uzávěr</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🟡 SST / Gelová zkumavka — sérum <span style="font-weight:400;opacity:.8;font-size:12px">(182 vyšetření)</span></h2>
+      <div class="grp-sub">Srážlivá krev s gelem a aktivátorem srážení — zlatý nebo oranžový uzávěr</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -899,8 +936,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-2" class="grp-section" style="border-color:#8e24aa">
   <div class="grp-header" style="background:#6a1b9a">
-    <h2>🟣 EDTA zkumavka — plná krev <span class="grp-count">60 vyšetření</span></h2>
-    <div class="grp-sub">Nesrážlivá krev s K2EDTA / Na2EDTA — fialový uzávěr. Hematologie, DNA.</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🟣 EDTA zkumavka — plná krev <span style="font-weight:400;opacity:.8;font-size:12px">(60 vyšetření)</span></h2>
+      <div class="grp-sub">Nesrážlivá krev s K2EDTA / Na2EDTA — fialový uzávěr. Hematologie, DNA.</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -971,8 +1011,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-3" class="grp-section" style="border-color:#1e88e5">
   <div class="grp-header" style="background:#1565c0">
-    <h2>🔵 Citračná zkumavka — koagulace <span class="grp-count">17 vyšetření</span></h2>
-    <div class="grp-sub">Nesrážlivá krev s citrátem sodným 1:9 — modrý uzávěr</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🔵 Citračná zkumavka — koagulace <span style="font-weight:400;opacity:.8;font-size:12px">(17 vyšetření)</span></h2>
+      <div class="grp-sub">Nesrážlivá krev s citrátem sodným 1:9 — modrý uzávěr</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -1000,8 +1043,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-4" class="grp-section" style="border-color:#43a047">
   <div class="grp-header" style="background:#2e7d32">
-    <h2>🟢 Heparinová zkumavka — plazma <span class="grp-count">19 vyšetření</span></h2>
-    <div class="grp-sub">Nesrážlivá krev s lithium-heparinem — zelený uzávěr</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🟢 Heparinová zkumavka — plazma <span style="font-weight:400;opacity:.8;font-size:12px">(19 vyšetření)</span></h2>
+      <div class="grp-sub">Nesrážlivá krev s lithium-heparinem — zelený uzávěr</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -1031,8 +1077,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-5" class="grp-section" style="border-color:#78909c">
   <div class="grp-header" style="background:#546e7a">
-    <h2>⬜ Fluoridová zkumavka — glykémie / laktát <span class="grp-count">5 vyšetření</span></h2>
-    <div class="grp-sub">Nesrážlivá krev s fluoridem nebo oxalátem — šedý uzávěr</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>⬜ Fluoridová zkumavka — glykémie / laktát <span style="font-weight:400;opacity:.8;font-size:12px">(5 vyšetření)</span></h2>
+      <div class="grp-sub">Nesrážlivá krev s fluoridem nebo oxalátem — šedý uzávěr</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -1048,8 +1097,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-6" class="grp-section" style="border-color:#ffb300">
   <div class="grp-header" style="background:#e65100">
-    <h2>🟠 Moč — zkumavka / sterilní nádobka <span class="grp-count">105 vyšetření</span></h2>
-    <div class="grp-sub">Jednorázový vzorek nebo sběr moče, URICULT — sterilní nebo nesterilní nádobka</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🟠 Moč — zkumavka / sterilní nádobka <span style="font-weight:400;opacity:.8;font-size:12px">(105 vyšetření)</span></h2>
+      <div class="grp-sub">Jednorázový vzorek nebo sběr moče, URICULT — sterilní nebo nesterilní nádobka</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -1165,8 +1217,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-7" class="grp-section" style="border-color:#e53935">
   <div class="grp-header" style="background:#b71c1c">
-    <h2>🔴 Mikrobiologická výtěrovka / tampón <span class="grp-count">42 vyšetření</span></h2>
-    <div class="grp-sub">Sterilní výtěrovka (plastová nebo drátěná) s médiem Amies nebo bez média</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🔴 Mikrobiologická výtěrovka / tampón <span style="font-weight:400;opacity:.8;font-size:12px">(42 vyšetření)</span></h2>
+      <div class="grp-sub">Sterilní výtěrovka (plastová nebo drátěná) s médiem Amies nebo bez média</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -1219,8 +1274,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-8" class="grp-section" style="border-color:#5e35b1">
   <div class="grp-header" style="background:#4527a0">
-    <h2>🧬 PCR výtěrovka / odběrová sada <span class="grp-count">10 vyšetření</span></h2>
-    <div class="grp-sub">Výtěrovka nebo zkumavka s PCR transportním médiem (MWE, Bi-Cov)</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🧬 PCR výtěrovka / odběrová sada <span style="font-weight:400;opacity:.8;font-size:12px">(10 vyšetření)</span></h2>
+      <div class="grp-sub">Výtěrovka nebo zkumavka s PCR transportním médiem (MWE, Bi-Cov)</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -1241,8 +1299,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-9" class="grp-section" style="border-color:#00acc1">
   <div class="grp-header" style="background:#006064">
-    <h2>🧪 Sterilní zkumavka / kontejner — kultivace <span class="grp-count">20 vyšetření</span></h2>
-    <div class="grp-sub">Sterilní plastová zkumavka nebo sputovka — kultivace, likvor, sputum</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>🧪 Sterilní zkumavka / kontejner — kultivace <span style="font-weight:400;opacity:.8;font-size:12px">(20 vyšetření)</span></h2>
+      <div class="grp-sub">Sterilní plastová zkumavka nebo sputovka — kultivace, likvor, sputum</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>
@@ -1273,8 +1334,11 @@ footer { margin-top: 24px; padding: 12px 16px; background: white; border: 1px so
 </div>
 <div id="grp-mat-10" class="grp-section" style="border-color:#546e7a">
   <div class="grp-header" style="background:#37474f">
-    <h2>📋 Jiný / kombinovaný odběr <span class="grp-count">24 vyšetření</span></h2>
-    <div class="grp-sub">Stolice, podložní sklíčko, ostatní nebo kombinace výše neuvedených materiálů</div>
+    <button class="grp-back" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>📋 Jiný / kombinovaný odběr <span style="font-weight:400;opacity:.8;font-size:12px">(24 vyšetření)</span></h2>
+      <div class="grp-sub">Stolice, podložní sklíčko, ostatní nebo kombinace výše neuvedených materiálů</div>
+    </div>
   </div>
   <table><colgroup><col style="width:7%"><col style="width:7%"><col style="width:22%"><col style="width:11%"><col style="width:26%"><col style="width:8%"><col style="width:19%"></colgroup>
     <thead><tr>

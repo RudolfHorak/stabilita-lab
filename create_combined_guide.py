@@ -219,8 +219,11 @@ def build_stab_sections(grouped: dict) -> tuple[str, str]:
         sections += f"""
 <div id="grp-stab-{g['id']}" class="grp-section" style="border-color:{g['color_border']}">
   <div class="grp-header" style="background:{g['color_header']}">
-    <h2>{g['icon']} {g['label']} <span class="grp-count">{len(tests)} vyšetření</span></h2>
-    <div class="grp-sub">{g['subtitle']}</div>
+    <button class="grp-back" onclick="window.scrollTo({{top:0,behavior:'smooth'}})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>{g['icon']} {g['label']} <span style="font-weight:400;opacity:.8;font-size:12px">({len(tests)} vyšetření)</span></h2>
+      <div class="grp-sub">{g['subtitle']}</div>
+    </div>
   </div>
   <table>{COL_WIDTHS_STAB}
     <thead><tr>
@@ -341,8 +344,11 @@ def build_mat_sections(grouped: dict) -> tuple[str, str]:
         sections += f"""
 <div id="grp-mat-{g['id']}" class="grp-section" style="border-color:{g['color_border']}">
   <div class="grp-header" style="background:{g['color_header']}">
-    <h2>{g['icon']} {g['label']} <span class="grp-count">{len(tests)} vyšetření</span></h2>
-    <div class="grp-sub">{g['subtitle']}</div>
+    <button class="grp-back" onclick="window.scrollTo({{top:0,behavior:'smooth'}})" title="Zpět na začátek">↑ Zpět</button>
+    <div class="grp-header-text">
+      <h2>{g['icon']} {g['label']} <span style="font-weight:400;opacity:.8;font-size:12px">({len(tests)} vyšetření)</span></h2>
+      <div class="grp-sub">{g['subtitle']}</div>
+    </div>
   </div>
   <table>{COL_WIDTHS_MAT}
     <thead><tr>
@@ -439,10 +445,17 @@ body { font-family: 'Segoe UI', Arial, sans-serif; font-size: 12px; color: #1a1a
 
 /* Skupiny */
 .grp-section { margin-bottom: 24px; border-radius: 6px; overflow: hidden; border: 2px solid; box-shadow: 0 1px 4px rgba(0,0,0,.08); }
-.grp-header { padding: 10px 16px; color: white; }
+.grp-header { padding: 10px 16px; color: white; display: flex; align-items: flex-start; gap: 10px; }
+.grp-header-text { flex: 1; }
 .grp-header h2 { font-size: 14px; font-weight: 700; }
 .grp-header .grp-sub { font-size: 11px; opacity: .9; margin-top: 2px; }
-.grp-count { float: right; font-size: 11px; opacity: .85; font-weight: 400; }
+.grp-back {
+    flex-shrink: 0; background: rgba(255,255,255,.18); color: white;
+    border: 1px solid rgba(255,255,255,.4); border-radius: 4px;
+    padding: 3px 9px; font-size: 11px; font-weight: 600; cursor: pointer;
+    white-space: nowrap; line-height: 1.6;
+}
+.grp-back:hover { background: rgba(255,255,255,.32); }
 
 /* Tabulky */
 table { width: 100%; table-layout: fixed; border-collapse: collapse; background: white; }
